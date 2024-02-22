@@ -1,7 +1,9 @@
 # Filestore
 
-Command line interface to load/run WASM modules using the onboard Flash storage.
+Application that has a Command line interface to save/load/run WASM modules using the onboard Flash storage.
 
+
+## How to run
 
 ```
 tinygo flash -size short -target pybadge ./filestore
@@ -47,7 +49,7 @@ You do not yet have any WASM files in the Flash storage. Let's put one on the de
 The easiest way to do this is the `savefile.sh` script. Press `CTRL-C` to return to your shell, then run the following command (substitute the correct port name for `/dev/ttyACM0` as needed):
 
 ```
-./examples/filestore/savefile.sh ./examples/filestore/ping.wasm /dev/ttyACM0
+./filestore/savefile.sh ./filestore/ping.wasm /dev/ttyACM0
 ```
 
 Now connect again to the board, and now you should see the file listed using the `ls` command:
