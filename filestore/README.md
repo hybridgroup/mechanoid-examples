@@ -4,7 +4,7 @@ Command line interface to load/run WASM modules using the onboard Flash storage.
 
 
 ```
-tinygo flash -size short -target pybadge -monitor ./examples/filestore
+tinygo flash -size short -target pybadge ./filestore
 ```
 
 ## How to use
