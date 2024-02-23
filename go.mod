@@ -2,19 +2,16 @@ module github.com/hybridgroup/mechanoid-examples
 
 go 1.22.0
 
-replace github.com/c0mm4nd/wasman => github.com/hybridgroup/wasman v0.0.0-20240221230704-63fe31eeb0c3
-
 require (
 	github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def
 	github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182
-	github.com/hybridgroup/mechanoid v0.0.0-20240222102258-bc9654391926
+	github.com/hybridgroup/mechanoid v0.0.0-20240223123243-c0a855f868b3
 	tinygo.org/x/drivers v0.26.1-0.20231206190939-3fabdc5c9680
 )
 
 require (
 	fyne.io/fyne/v2 v2.3.4 // indirect
 	fyne.io/systray v1.10.1-0.20230403195833-7dc3c09283d6 // indirect
-	github.com/c0mm4nd/wasman v0.0.0-20220422074058-87e38ef26abd // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fredbi/uri v0.1.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
@@ -28,6 +25,7 @@ require (
 	github.com/goki/freetype v0.0.0-20220119013949-7a161fd3728c // indirect
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
+	github.com/hybridgroup/wasman v0.0.0-20240223122031-5eaa03843b74 // indirect
 	github.com/jsummers/gobmp v0.0.0-20151104160322-e2ba15ffa76e // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/srwiley/oksvg v0.0.0-20220731023508-a61f04f16b76 // indirect
