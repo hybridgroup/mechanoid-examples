@@ -7,12 +7,9 @@ func hola(msg string) uint32
 
 const msg = "Hello, WebAssembly!"
 
-var msgdata [64]byte
-
 //go:export hello
 func hello() {
-	copy(msgdata[:], []byte(msg))
-	hola(string(msgdata[:len(msg)]))
+	hola(msg)
 }
 
 func main() {}
