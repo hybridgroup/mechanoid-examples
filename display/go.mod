@@ -1,12 +1,12 @@
-module github.com/hybridgroup/mechanoid-examples
+module github.com/hybridgroup/mechanoid-examples/display
 
 go 1.22.0
 
 require (
 	github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def
 	github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182
-	github.com/hybridgroup/mechanoid v0.0.0-20240223123243-c0a855f868b3
-	tinygo.org/x/drivers v0.26.1-0.20231206190939-3fabdc5c9680
+	github.com/hybridgroup/mechanoid v0.0.0-20240223144719-a26235ac460c
+	tinygo.org/x/drivers v0.26.1-0.20231124130000-fef6564044f9
 )
 
 require (
@@ -40,5 +40,4 @@ require (
 	golang.org/x/text v0.7.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	honnef.co/go/js/dom v0.0.0-20210725211120-f030747120f2 // indirect
-	tinygo.org/x/tinyfs v0.3.1-0.20231212053859-32ae3f6bbad9 // indirect
 )
