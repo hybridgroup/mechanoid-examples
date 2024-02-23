@@ -14,22 +14,24 @@ var pingModule []byte
 func main() {
 	time.Sleep(5 * time.Second)
 
-	println("TinyWASM engine starting...")
+	println("Mechanoid engine starting...")
 	eng := engine.NewEngine()
 
-	println("Using interpreter...")
-	eng.UseInterpreter(&wasman.Interpreter{})
+	intp := &wasman.Interpreter{}
+
+	println("Using interpreter", intp.Name())
+	eng.UseInterpreter(intp)
 
 	println("Initializing engine...")
 	eng.Init()
 
-	println("Defining func...")
+	println("Defining host function...")
 	if err := eng.Interpreter.DefineFunc("hosted", "pong", pongFunc); err != nil {
 		println(err.Error())
 		return
 	}
 
-	println("Loading module...")
+	println("Loading WASM module...")
 	if err := eng.Interpreter.Load(pingModule); err != nil {
 		println(err.Error())
 		return
