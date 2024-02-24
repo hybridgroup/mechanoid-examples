@@ -9,7 +9,7 @@ import (
 	"github.com/hybridgroup/mechanoid/interp/wasman"
 )
 
-//go:embed modules/blink/blink.wasm
+//go:embed modules/blink.wasm
 var pingModule []byte
 
 func main() {

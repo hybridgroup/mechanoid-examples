@@ -13,6 +13,7 @@ mecha new example.com/modules/blinky github.com/hybridgroup/mechanoid-examples/b
 Now install and build the needed WASM module:
 
 ```
+cd blinky
 mecha new module example.com/modules/blink github.com/hybridgroup/mechanoid-examples/modules/blink
 mecha build
 ```

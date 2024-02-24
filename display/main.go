@@ -9,7 +9,7 @@ import (
 	"github.com/hybridgroup/mechanoid/interp/wasman"
 )
 
-//go:embed ping.wasm
+//go:embed modules/ping.wasm
 var pingModule []byte
 
 var (
