@@ -45,21 +45,6 @@ func main() {
 	run(NewDisplayDevice(board.Display.Configure()))
 }
 
-func loadMenuChoices() error {
-	modules, err := modules.ReadDir("modules")
-	if err != nil {
-		return err
-	}
-
-	for _, module := range modules {
-		if module.IsDir() {
-			continue
-		}
-		menuChoices = append(menuChoices, module.Name())
-	}
-	return nil
-}
-
 func run[T pixel.Color](display DisplayDevice[T]) {
 	loadMenuChoices()
 	display.createHome()

@@ -67,3 +67,18 @@ func (d *DisplayDevice[T]) showHome() {
 	d.Screen.SetChild(homePage.(*Page[T]).VBox)
 	d.Screen.Update()
 }
+
+func loadMenuChoices() error {
+	modules, err := modules.ReadDir("modules")
+	if err != nil {
+		return err
+	}
+
+	for _, module := range modules {
+		if module.IsDir() {
+			continue
+		}
+		menuChoices = append(menuChoices, module.Name())
+	}
+	return nil
+}
