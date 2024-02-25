@@ -42,6 +42,8 @@ func main() {
 		return
 	}
 
+	board.Buttons.Configure()
+
 	run(NewDisplayDevice(board.Display.Configure()))
 }
 
@@ -55,30 +57,25 @@ func run[T pixel.Color](display DisplayDevice[T]) {
 	for {
 		// TODO: wait for input instead of polling
 		board.Buttons.ReadInput()
-		for {
-			event := board.Buttons.NextEvent()
-			if event == board.NoKeyEvent {
-				break
+		event := board.Buttons.NextEvent()
+		if !event.Pressed() {
+			continue
+		}
+		switch event.Key() {
+		case board.KeyUp:
+			index := listbox.Selected() - 1
+			if index < 0 {
+				index = listbox.Len() - 1
 			}
-			if !event.Pressed() {
-				continue
+			listbox.Select(index)
+		case board.KeyDown:
+			index := listbox.Selected() + 1
+			if index >= listbox.Len() {
+				index = 0
 			}
-			switch event.Key() {
-			case board.KeyUp:
-				index := listbox.Selected() - 1
-				if index < 0 {
-					index = listbox.Len() - 1
-				}
-				listbox.Select(index)
-			case board.KeyDown:
-				index := listbox.Selected() + 1
-				if index >= listbox.Len() {
-					index = 0
-				}
-				listbox.Select(index)
-			case board.KeyEnter, board.KeyA:
-				//runApp(listbox.Selected(), display, screen, home, touchInput)
-			}
+			listbox.Select(index)
+		case board.KeyEnter, board.KeyA:
+			runWASM(menuChoices[listbox.Selected()], display, homePage)
 		}
 
 		display.Screen.Update()
@@ -86,7 +83,7 @@ func run[T pixel.Color](display DisplayDevice[T]) {
 	}
 }
 
-func runWASM(module string) error {
+func runWASM[T pixel.Color](module string, display DisplayDevice[T], home any) error {
 	println("Loading WASM module...")
 	moduleData, err := modules.ReadFile("modules/" + module)
 
@@ -102,12 +99,13 @@ func runWASM(module string) error {
 		return err
 	}
 
-	for {
+	for i := 0; i < 15; i++ {
 		println("Ping", pingCount)
 		ins.Call("ping")
 		pingCount++
-		//display.SetText1(convert.IntToString(pingCount))
 
 		time.Sleep(1 * time.Second)
 	}
+
+	return nil
 }
