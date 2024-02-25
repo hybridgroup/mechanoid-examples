@@ -29,33 +29,3 @@ mecha flash pybadge
 ```
 mecha flash gopher-badge
 ```
-
-## How to run
-
-Create a new project based on this example:
-
-```
-mecha new example.com/modules/display github.com/hybridgroup/mechanoid-templates/display
-```
-
-Now install and build the needed WASM module:
-
-```
-cd display
-mecha new module example.com/display/modules/blink github.com/hybridgroup/mechanoid-templates/modules/blink
-mecha build
-```
-
-Now you can build and flash your board:
-
-- PyBadge
-
-```
-mecha flash pybadge
-```
-
-- Gopher Badge
-
-```
-mecha flash gopher-badge
-```
