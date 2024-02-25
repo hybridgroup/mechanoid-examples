@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/aykevl/board"
+	"github.com/hybridgroup/mechanoid/convert"
 	"github.com/hybridgroup/mechanoid/engine"
 	"github.com/hybridgroup/mechanoid/interp/wasman"
 	"tinygo.org/x/drivers/pixel"
@@ -36,6 +37,7 @@ func main() {
 
 	if err := eng.Interpreter.DefineFunc("hosted", "pong", func() {
 		pongCount++
+
 		//display.SetText2(convert.IntToString(pongCount))
 	}); err != nil {
 		println(err.Error())
@@ -76,6 +78,7 @@ func run[T pixel.Color](display DisplayDevice[T]) {
 			listbox.Select(index)
 		case board.KeyEnter, board.KeyA:
 			runWASM(menuChoices[listbox.Selected()], display, homePage)
+			display.showHome()
 		}
 
 		display.Screen.Update()
@@ -84,6 +87,11 @@ func run[T pixel.Color](display DisplayDevice[T]) {
 }
 
 func runWASM[T pixel.Color](module string, display DisplayDevice[T], home any) error {
+	println("Running WASM module", module)
+
+	display.createWasmPage(module)
+	display.showWasmPage()
+
 	println("Loading WASM module...")
 	moduleData, err := modules.ReadFile("modules/" + module)
 
@@ -100,9 +108,11 @@ func runWASM[T pixel.Color](module string, display DisplayDevice[T], home any) e
 	}
 
 	for i := 0; i < 15; i++ {
-		println("Ping", pingCount)
 		ins.Call("ping")
 		pingCount++
+
+		println("Ping", pingCount)
+		display.outputToWasmPage("Ping " + convert.IntToString(pingCount))
 
 		time.Sleep(1 * time.Second)
 	}

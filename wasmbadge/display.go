@@ -82,3 +82,41 @@ func loadMenuChoices() error {
 	}
 	return nil
 }
+
+var (
+	wasmPage any
+)
+
+type WASMPage[T pixel.Color] struct {
+	Name    string
+	VBox    *tinygl.VBox[T]
+	Header  *tinygl.Text[T]
+	TextBox *tinygl.Text[T]
+}
+
+// createWasmPage creates the screen when executing wasm on the badge.
+func (d *DisplayDevice[T]) createWasmPage(module string) {
+	header := d.Theme.NewText(module)
+	header.SetBackground(pixel.NewColor[T](255, 0, 0))
+	header.SetColor(pixel.NewColor[T](255, 255, 255))
+
+	textbox := d.Theme.NewText("Running " + module)
+	textbox.SetAlign(tinygl.AlignCenter)
+	wasmbox := d.Theme.NewVBox(header, textbox)
+	wasmPage = &WASMPage[T]{
+		Name:    module,
+		VBox:    wasmbox,
+		Header:  header,
+		TextBox: textbox,
+	}
+}
+
+func (d *DisplayDevice[T]) showWasmPage() {
+	d.Screen.SetChild(wasmPage.(*WASMPage[T]).VBox)
+	d.Screen.Update()
+}
+
+func (d *DisplayDevice[T]) outputToWasmPage(s string) {
+	wasmPage.(*WASMPage[T]).TextBox.SetText(s)
+	d.Screen.Update()
+}
