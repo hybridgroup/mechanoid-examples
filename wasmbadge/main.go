@@ -5,23 +5,25 @@ import (
 	"time"
 
 	"github.com/aykevl/board"
-	"github.com/hybridgroup/mechanoid/convert"
 	"github.com/hybridgroup/mechanoid/engine"
 	"github.com/hybridgroup/mechanoid/interp/wasman"
 	"tinygo.org/x/drivers/pixel"
+
+	"github.com/hybridgroup/mechanoid-examples/wasmbadge/devices/badge"
+	"github.com/hybridgroup/mechanoid-examples/wasmbadge/devices/display"
 )
 
 //go:embed modules/*.wasm
 var modules embed.FS
 
 var (
-	pingCount, pongCount int
-
 	eng  *engine.Engine
 	intp engine.Interpreter
 )
 
 func main() {
+	time.Sleep(5 * time.Second)
+
 	println("Mechanoid engine starting...")
 	eng = engine.NewEngine()
 
@@ -32,29 +34,27 @@ func main() {
 	println("Using interpreter", intp.Name())
 	eng.UseInterpreter(intp)
 
+	run(display.NewDevice(board.Display.Configure()))
+}
+
+func run[T pixel.Color](d display.Device[T]) {
+	// badge interface to display API
+	bg := badge.NewDevice[T](eng)
+	bg.UseDisplay(&d)
+
+	// host interface to badge API
+	eng.AddDevice(bg)
+
 	println("Initializing engine...")
 	eng.Init()
 
-	if err := eng.Interpreter.DefineFunc("hosted", "pong", func() {
-		pongCount++
-
-		//display.SetText2(convert.IntToString(pongCount))
-	}); err != nil {
-		println(err.Error())
-		return
-	}
-
 	board.Buttons.Configure()
 
-	run(NewDisplayDevice(board.Display.Configure()))
-}
-
-func run[T pixel.Color](display DisplayDevice[T]) {
 	loadMenuChoices()
-	display.createHome()
-	display.showHome()
+	home := createHome[T](d)
+	home.Show(d)
 
-	listbox := homePage.(*Page[T]).ListBox
+	listbox := home.ListBox
 
 	for {
 		// TODO: wait for input instead of polling
@@ -77,23 +77,22 @@ func run[T pixel.Color](display DisplayDevice[T]) {
 			}
 			listbox.Select(index)
 		case board.KeyEnter, board.KeyA:
-			runWASM(menuChoices[listbox.Selected()], display, homePage)
-			display.showHome()
+			runWASM(menuChoices[listbox.Selected()], d, home)
+			home.Show(d)
 		}
 
-		display.Screen.Update()
+		d.Screen.Update()
 		time.Sleep(time.Second / 30)
 	}
 }
 
-func runWASM[T pixel.Color](module string, display DisplayDevice[T], home any) error {
+func runWASM[T pixel.Color](module string, d display.Device[T], home any) error {
 	println("Running WASM module", module)
 
-	display.createWasmPage(module)
-	display.showWasmPage()
-
-	println("Loading WASM module...")
 	moduleData, err := modules.ReadFile("modules/" + module)
+	if err != nil {
+		return err
+	}
 
 	if err := eng.Interpreter.Load(moduleData); err != nil {
 		println(err.Error())
@@ -107,13 +106,10 @@ func runWASM[T pixel.Color](module string, display DisplayDevice[T], home any) e
 		return err
 	}
 
+	ins.Call("start")
+
 	for i := 0; i < 15; i++ {
-		ins.Call("ping")
-		pingCount++
-
-		println("Ping", pingCount)
-		display.outputToWasmPage("Ping " + convert.IntToString(pingCount))
-
+		ins.Call("update")
 		time.Sleep(1 * time.Second)
 	}
 
