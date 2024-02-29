@@ -51,8 +51,8 @@ func run[T pixel.Color](d display.Device[T]) {
 	board.Buttons.Configure()
 
 	loadMenuChoices()
-	home := createHome[T](d)
-	home.Show(d)
+	home := createHome[T](&d)
+	home.Show(&d)
 
 	listbox := home.ListBox
 
@@ -77,8 +77,8 @@ func run[T pixel.Color](d display.Device[T]) {
 			}
 			listbox.Select(index)
 		case board.KeyEnter, board.KeyA:
-			runWASM(menuChoices[listbox.Selected()], d, home)
-			home.Show(d)
+			runWASM(menuChoices[listbox.Selected()], &d)
+			home.Show(&d)
 		}
 
 		d.Screen.Update()
@@ -86,7 +86,7 @@ func run[T pixel.Color](d display.Device[T]) {
 	}
 }
 
-func runWASM[T pixel.Color](module string, d display.Device[T], home any) error {
+func runWASM[T pixel.Color](module string, d *display.Device[T]) error {
 	println("Running WASM module", module)
 
 	moduleData, err := modules.ReadFile("modules/" + module)

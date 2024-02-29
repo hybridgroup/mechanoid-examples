@@ -6,20 +6,38 @@ import (
 	"github.com/hybridgroup/mechanoid/convert"
 )
 
-//go:wasmimport badge new_big_text
-func new_big_text(ptr, sz uint32) uint32
-
 const msg = "Hello, WebAssembly!"
+
+var (
+	bgtext  *BigText
+	counter int
+	buf     [64]byte
+)
 
 //go:export start
 func start() {
-	ptr, sz := convert.StringToWasmPtr(msg)
-	new_big_text(ptr, sz)
+	bgtext = NewBigText(msg)
 }
 
 //go:export update
 func update() {
-	// TODO: something with the ui
+	start, end := 0, len(msg)
+	copy(buf[:], msg)
+	bgtext.SetText1(buf[start:end])
+
+	m := "Count: "
+	start, end = end, end+len(m)
+	copy(buf[start:end], m)
+
+	counter++
+	s := convert.IntToString(counter)
+	st2 := end
+	end = end + len(s)
+
+	copy(buf[st2:end], s)
+	bgtext.SetText2(buf[start:end])
+
+	bgtext.Show()
 }
 
 func main() {}
