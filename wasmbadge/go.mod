@@ -2,12 +2,10 @@ module github.com/hybridgroup/mechanoid-examples/wasmbadge
 
 go 1.22.0
 
-replace github.com/hybridgroup/mechanoid => ../../mechanoid
-
 require (
 	github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def
 	github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182
-	github.com/hybridgroup/mechanoid v0.0.0-20240229124857-211c462650bb
+	github.com/hybridgroup/mechanoid v0.0.0-20240229223522-3549fad24552
 	tinygo.org/x/drivers v0.26.1-0.20231124130000-fef6564044f9
 )
 
