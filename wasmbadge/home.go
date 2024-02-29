@@ -16,12 +16,11 @@ type HomePage[T pixel.Color] struct {
 }
 
 var (
-	homePage    any
 	menuChoices = make([]string, 0, 10)
 )
 
 // createHome creates the home screen for the badge.
-func createHome[T pixel.Color](d display.Device[T]) *HomePage[T] {
+func createHome[T pixel.Color](d *display.Device[T]) *HomePage[T] {
 	// Create badge homescreen.
 	header := d.Theme.NewText("WASM Badge")
 	header.SetBackground(pixel.NewColor[T](255, 0, 0))
@@ -38,7 +37,7 @@ func createHome[T pixel.Color](d display.Device[T]) *HomePage[T] {
 	}
 }
 
-func (p *HomePage[T]) Show(d display.Device[T]) {
+func (p *HomePage[T]) Show(d *display.Device[T]) {
 	d.Screen.SetChild(p.VBox)
 	d.Screen.Update()
 }

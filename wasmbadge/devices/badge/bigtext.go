@@ -37,10 +37,19 @@ func NewBigText[T pixel.Color](d *display.Device[T], hdr, txt1, txt2 string) *Bi
 		VBox:     vbox,
 		Header:   header,
 		TextBox1: textbox1,
+		TextBox2: textbox2,
 	}
 }
 
 func (bt *BigText[T]) Show(d *display.Device[T]) {
 	d.Screen.SetChild(bt.VBox)
 	d.Screen.Update()
+}
+
+func (bt *BigText[T]) SetText1(s string) {
+	bt.TextBox1.SetText(s)
+}
+
+func (bt *BigText[T]) SetText2(s string) {
+	bt.TextBox2.SetText(s)
 }

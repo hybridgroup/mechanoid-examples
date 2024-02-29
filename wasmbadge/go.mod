@@ -2,10 +2,12 @@ module github.com/hybridgroup/mechanoid-examples/wasmbadge
 
 go 1.22.0
 
+replace github.com/hybridgroup/mechanoid => ../../mechanoid
+
 require (
 	github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def
 	github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182
-	github.com/hybridgroup/mechanoid v0.0.0-20240223144719-a26235ac460c
+	github.com/hybridgroup/mechanoid v0.0.0-20240229124857-211c462650bb
 	tinygo.org/x/drivers v0.26.1-0.20231124130000-fef6564044f9
 )
 
@@ -25,7 +27,7 @@ require (
 	github.com/goki/freetype v0.0.0-20220119013949-7a161fd3728c // indirect
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
-	github.com/hybridgroup/wasman v0.0.0-20240223122031-5eaa03843b74 // indirect
+	github.com/hybridgroup/wasman v0.0.0-20240229144219-f3288962ab34 // indirect
 	github.com/jsummers/gobmp v0.0.0-20151104160322-e2ba15ffa76e // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/srwiley/oksvg v0.0.0-20220731023508-a61f04f16b76 // indirect
