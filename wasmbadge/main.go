@@ -57,7 +57,6 @@ func run[T pixel.Color](d display.Device[T]) {
 	listbox := home.ListBox
 
 	for {
-		// TODO: wait for input instead of polling
 		board.Buttons.ReadInput()
 		event := board.Buttons.NextEvent()
 		if !event.Pressed() {
@@ -84,34 +83,4 @@ func run[T pixel.Color](d display.Device[T]) {
 		d.Screen.Update()
 		time.Sleep(time.Second / 30)
 	}
-}
-
-func runWASM[T pixel.Color](module string, d *display.Device[T]) error {
-	println("Running WASM module", module)
-
-	moduleData, err := modules.ReadFile("modules/" + module)
-	if err != nil {
-		return err
-	}
-
-	if err := eng.Interpreter.Load(moduleData); err != nil {
-		println(err.Error())
-		return err
-	}
-
-	println("Running module...")
-	ins, err := eng.Interpreter.Run()
-	if err != nil {
-		println(err.Error())
-		return err
-	}
-
-	ins.Call("start")
-
-	for i := 0; i < 15; i++ {
-		ins.Call("update")
-		time.Sleep(1 * time.Second)
-	}
-
-	return nil
 }
