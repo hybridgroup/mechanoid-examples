@@ -27,14 +27,58 @@ flowchart LR
 
 ## How to run it
 
-### Compile the WASM module
-
-See [ping module](../modules/ping/)
-
-### Compile and flash the microcontroller
+### Build the WASM module
 
 ```
-tinygo flash -size short -target pybadge -monitor ./simple
+$ mecha build
+Building module ping
+   code    data     bss |   flash     ram
+      9       0       0 |       9       0
+```
+
+
+### Flash the board
+
+PyBadge:
+
+```
+$ mecha flash -m pybadge
+   code    data     bss |   flash     ram
+ 101572    2044    6680 |  103616    8724
+Connected to /dev/ttyACM0. Press Ctrl-C to exit.
+Mechanoid engine starting...
+Using interpreter wasman
+Initializing engine...
+Defining host function...
+Loading WASM module...
+Running module...
+Calling ping...
+pong
+Calling ping...
+pong
+Calling ping...
+pong
+```
+
+Gopher Badge:
+
+```
+$ mecha flash -m gopher-badge
+   code    data     bss |   flash     ram
+ 109020    2044    3168 |  111064    5212
+Connected to /dev/ttyACM0. Press Ctrl-C to exit.
+Mechanoid engine starting...
+Using interpreter wasman
+Initializing engine...
+Defining host function...
+Loading WASM module...
+Running module...
+Calling ping...
+pong
+Calling ping...
+pong
+Calling ping...
+pong
 ```
 
 You should see output start in your terminal from the microcontroller.
