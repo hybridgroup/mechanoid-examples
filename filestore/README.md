@@ -5,18 +5,39 @@ Application that has a Command line interface to save/load/run WASM modules usin
 
 ## How to run
 
+### Flash the board
+
+#### PyBadge
+
 ```
-tinygo flash -size short -target pybadge ./filestore
+$ mecha flash -m pybadge
+   code    data     bss |   flash     ram
+ 130368    2148    6888 |  132516    9036
+
+Connected to /dev/ttyACM0. Press Ctrl-C to exit.
+
+==> 
+
 ```
+
+You should see the `==>` prompt. See "How to use" below.
+
+#### Gopher Badge
+
+```
+$ mecha flash -m gopher-badge
+   code    data     bss |   flash     ram
+ 139772       4    3632 |  139776    3636
+Connected to /dev/ttyACM0. Press Ctrl-C to exit.
+
+==>
+
+```
+
+You should see the `==>` prompt. See "How to use" below.
+
 
 ## How to use
-
-Connect via serial port:
-
-```
-tinygo monitor
-
-```
 
 You should see a `==>` prompt. Try the `lsblk` command to see the Flash storage information:
 
@@ -46,7 +67,7 @@ Try the `ls` command.
 
 You do not yet have any WASM files in the Flash storage. Let's put one on the device using the `save` command.
 
-The easiest way to do this is the `savefile.sh` script. Press `CTRL-C` to return to your shell, then run the following command (substitute the correct port name for `/dev/ttyACM0` as needed):
+The easiest way to do this is the included `savefile` program. Press `CTRL-C` to return to your shell, then run the following command (substitute the correct port name for `/dev/ttyACM0` as needed):
 
 ```
 cd ./filestore
