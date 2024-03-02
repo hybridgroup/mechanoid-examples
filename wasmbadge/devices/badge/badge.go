@@ -3,6 +3,7 @@ package badge
 import (
 	"unsafe"
 
+	"github.com/aykevl/tinygl/image"
 	"github.com/hybridgroup/mechanoid-examples/wasmbadge/devices/display"
 	"github.com/hybridgroup/mechanoid/engine"
 	"tinygo.org/x/drivers/pixel"
@@ -26,22 +27,32 @@ func (b *Badge[T]) Init() error {
 		return engine.ErrInvalidEngine
 	}
 
-	if err := b.Engine.Interpreter.DefineFunc(moduleName, "new_big_text", b.newBigText); err != nil {
+	if err := b.Engine.Interpreter.DefineFunc("bigtext", "new", b.newBigText); err != nil {
 		println(err.Error())
 		return err
 	}
 
-	if err := b.Engine.Interpreter.DefineFunc("bigtext", "set_text1", b.bigTextSetText1); err != nil {
+	if err := b.Engine.Interpreter.DefineFunc("bigtext", "text1", b.bigTextSetText1); err != nil {
 		println(err.Error())
 		return err
 	}
 
-	if err := b.Engine.Interpreter.DefineFunc("bigtext", "set_text2", b.bigTextSetText2); err != nil {
+	if err := b.Engine.Interpreter.DefineFunc("bigtext", "text2", b.bigTextSetText2); err != nil {
 		println(err.Error())
 		return err
 	}
 
 	if err := b.Engine.Interpreter.DefineFunc("bigtext", "show", b.bigTextShow); err != nil {
+		println(err.Error())
+		return err
+	}
+
+	if err := b.Engine.Interpreter.DefineFunc("image", "new", b.newImage); err != nil {
+		println(err.Error())
+		return err
+	}
+
+	if err := b.Engine.Interpreter.DefineFunc("image", "show", b.imageShow); err != nil {
 		println(err.Error())
 		return err
 	}
@@ -129,6 +140,46 @@ func (b *Badge[T]) bigTextShow(ref uint32) uint32 {
 		return 0
 	}
 	bt.Show(b.Display)
+
+	return 1
+}
+
+func (b *Badge[T]) newImage(ptr uint32, sz uint32) uint32 {
+	data, err := b.Engine.Interpreter.MemoryData(ptr, sz)
+	if err != nil {
+		println(err.Error())
+		return 0
+	}
+
+	// load the image
+	qoi, err := image.NewQOI[T](string(data))
+	if err != nil {
+		println(err.Error())
+		return 0
+	}
+
+	// create the badge Image UI element
+	img := NewImage[T](b.Display, "Image", qoi)
+	if img == nil {
+		return 0
+	}
+
+	id := uint32(b.Engine.Interpreter.References().Add(unsafe.Pointer(img)))
+	return id
+}
+
+func (b *Badge[T]) imageShow(ref uint32) uint32 {
+	// get the badge UI element by reference
+	p := b.Engine.Interpreter.References().Get(int32(ref))
+	if p == uintptr(0) {
+		println("imageShow: reference not found")
+		return 0
+	}
+	img := (*Image[T])(unsafe.Pointer(p))
+	if img == nil {
+		return 0
+	}
+	img.Show(b.Display)
 
 	return 1
 }

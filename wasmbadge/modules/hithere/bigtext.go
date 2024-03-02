@@ -4,13 +4,13 @@ import (
 	"github.com/hybridgroup/mechanoid/convert"
 )
 
-//go:wasmimport badge new_big_text
+//go:wasmimport bigtext new
 func new_big_text(ptr, sz uint32) uint32
 
-//go:wasmimport bigtext set_text1
+//go:wasmimport bigtext text1
 func big_text_set_text1(p uint32, ptr, sz uint32) uint32
 
-//go:wasmimport bigtext set_text2
+//go:wasmimport bigtext text2
 func big_text_set_text2(p uint32, ptr, sz uint32) uint32
 
 //go:wasmimport bigtext show
