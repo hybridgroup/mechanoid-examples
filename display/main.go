@@ -17,9 +17,11 @@ var (
 )
 
 func main() {
+	time.Sleep(1 * time.Second)
+
 	display := NewDisplayDevice(board.Display.Configure())
 
-	println("TinyWASM engine starting...")
+	println("Mechanoid engine starting...")
 	eng := engine.NewEngine()
 
 	println("Using interpreter...")
