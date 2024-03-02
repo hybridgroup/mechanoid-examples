@@ -1,5 +1,3 @@
 # Blink
 
-Mechanoid WebAssembly module template.
-
-
+Mechanoid WebAssembly module that blinks a host LED.
