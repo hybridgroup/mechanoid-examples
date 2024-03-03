@@ -1,10 +1,14 @@
 package badge
 
 import (
+	"context"
 	"unsafe"
 
 	"github.com/hybridgroup/mechanoid-examples/wasmbadge/devices/display"
 	"github.com/hybridgroup/mechanoid/engine"
+	"github.com/hybridgroup/mechanoid/interp/wazero"
+	"github.com/stealthrocket/wazergo"
+	"github.com/stealthrocket/wazergo/types"
 	"tinygo.org/x/drivers/pixel"
 )
 
@@ -12,8 +16,6 @@ type Badge[T pixel.Color] struct {
 	Engine  *engine.Engine
 	Display *display.Device[T]
 }
-
-const moduleName = "badge"
 
 func NewDevice[T pixel.Color](e *engine.Engine) *Badge[T] {
 	return &Badge[T]{
@@ -25,27 +27,23 @@ func (b *Badge[T]) Init() error {
 	if b.Engine == nil {
 		return engine.ErrInvalidEngine
 	}
-
-	if err := b.Engine.Interpreter.DefineFunc(moduleName, "new_big_text", b.newBigText); err != nil {
+	interp := b.Engine.Interpreter.(*wazero.Interpreter)
+	err := wazero.AddModule[*Badge[T]](interp, "badge", b, wazergo.Functions[*Badge[T]]{
+		"new_big_text": wazergo.F1((*Badge[T]).newBigText),
+	})
+	if err != nil {
 		println(err.Error())
 		return err
 	}
-
-	if err := b.Engine.Interpreter.DefineFunc("bigtext", "set_text1", b.bigTextSetText1); err != nil {
+	err = wazero.AddModule[*Badge[T]](interp, "bigtext", b, wazergo.Functions[*Badge[T]]{
+		"set_text1": wazergo.F2((*Badge[T]).bigTextSetText1),
+		"set_text2": wazergo.F2((*Badge[T]).bigTextSetText2),
+		"show":      wazergo.F1((*Badge[T]).bigTextShow),
+	})
+	if err != nil {
 		println(err.Error())
 		return err
 	}
-
-	if err := b.Engine.Interpreter.DefineFunc("bigtext", "set_text2", b.bigTextSetText2); err != nil {
-		println(err.Error())
-		return err
-	}
-
-	if err := b.Engine.Interpreter.DefineFunc("bigtext", "show", b.bigTextShow); err != nil {
-		println(err.Error())
-		return err
-	}
-
 	return nil
 }
 
@@ -54,13 +52,7 @@ func (b *Badge[T]) UseDisplay(d *display.Device[T]) error {
 	return nil
 }
 
-func (b *Badge[T]) newBigText(ptr uint32, sz uint32) uint32 {
-	msg, err := b.Engine.Interpreter.MemoryData(ptr, sz)
-	if err != nil {
-		println(err.Error())
-		return 0
-	}
-
+func (b *Badge[T]) newBigText(_ context.Context, msg types.String) types.Uint32 {
 	// create the badge UI element
 	bt := NewBigText[T](b.Display, "WASM Badge", string(msg), "")
 	if bt == nil {
@@ -69,16 +61,10 @@ func (b *Badge[T]) newBigText(ptr uint32, sz uint32) uint32 {
 	bt.Show(b.Display)
 
 	id := uint32(b.Engine.Interpreter.References().Add(unsafe.Pointer(bt)))
-	return id
+	return types.Uint32(id)
 }
 
-func (b *Badge[T]) bigTextSetText1(ref uint32, ptr uint32, sz uint32) uint32 {
-	msg, err := b.Engine.Interpreter.MemoryData(ptr, sz)
-	if err != nil {
-		println(err.Error())
-		return 0
-	}
-
+func (b *Badge[T]) bigTextSetText1(_ context.Context, ref types.Uint32, msg types.String) types.Uint32 {
 	// get the badge UI element by reference
 	p := b.Engine.Interpreter.References().Get(int32(ref))
 	if p == uintptr(0) {
@@ -90,17 +76,10 @@ func (b *Badge[T]) bigTextSetText1(ref uint32, ptr uint32, sz uint32) uint32 {
 		return 0
 	}
 	bt.SetText1(string(msg))
-
-	return sz
+	return types.Uint32(len(msg))
 }
 
-func (b *Badge[T]) bigTextSetText2(ref uint32, ptr uint32, sz uint32) uint32 {
-	msg, err := b.Engine.Interpreter.MemoryData(ptr, sz)
-	if err != nil {
-		println(err.Error())
-		return 0
-	}
-
+func (b *Badge[T]) bigTextSetText2(_ context.Context, ref types.Uint32, msg types.String) types.Uint32 {
 	// get the badge UI element by reference
 	p := b.Engine.Interpreter.References().Get(int32(ref))
 	if p == uintptr(0) {
@@ -111,13 +90,11 @@ func (b *Badge[T]) bigTextSetText2(ref uint32, ptr uint32, sz uint32) uint32 {
 	if bt == nil {
 		return 0
 	}
-
 	bt.SetText2(string(msg))
-
-	return sz
+	return types.Uint32(len(msg))
 }
 
-func (b *Badge[T]) bigTextShow(ref uint32) uint32 {
+func (b *Badge[T]) bigTextShow(_ context.Context, ref types.Uint32) types.Uint32 {
 	// get the badge UI element by reference
 	p := b.Engine.Interpreter.References().Get(int32(ref))
 	if p == uintptr(0) {
@@ -131,4 +108,8 @@ func (b *Badge[T]) bigTextShow(ref uint32) uint32 {
 	bt.Show(b.Display)
 
 	return 1
+}
+
+func (b *Badge[T]) Close(context.Context) error {
+	return nil
 }
