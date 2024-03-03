@@ -14,8 +14,8 @@ type Image struct {
 	Ref uint32
 }
 
-func NewImage(data string) *Image {
-	ptr, sz := convert.StringToWasmPtr(data)
+func NewImage(data []byte) *Image {
+	ptr, sz := convert.BytesToWasmPtr(data)
 	return &Image{
 		Ref: new_image(ptr, sz),
 	}

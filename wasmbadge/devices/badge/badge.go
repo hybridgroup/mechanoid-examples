@@ -1,8 +1,6 @@
 package badge
 
 import (
-	"unsafe"
-
 	"github.com/aykevl/tinygl/image"
 	"github.com/hybridgroup/mechanoid-examples/wasmbadge/devices/display"
 	"github.com/hybridgroup/mechanoid/engine"
@@ -66,6 +64,7 @@ func (b *Badge[T]) UseDisplay(d *display.Device[T]) error {
 }
 
 func (b *Badge[T]) newBigText(ptr uint32, sz uint32) uint32 {
+	println("newBigText", ptr, sz)
 	msg, err := b.Engine.Interpreter.MemoryData(ptr, sz)
 	if err != nil {
 		println(err.Error())
@@ -79,7 +78,7 @@ func (b *Badge[T]) newBigText(ptr uint32, sz uint32) uint32 {
 	}
 	bt.Show(b.Display)
 
-	id := uint32(b.Engine.Interpreter.References().Add(unsafe.Pointer(bt)))
+	id := uint32(b.Engine.Interpreter.References().Add(bt))
 	return id
 }
 
@@ -96,7 +95,7 @@ func (b *Badge[T]) bigTextSetText1(ref uint32, ptr uint32, sz uint32) uint32 {
 		println("bigTextSetText1: reference not found")
 		return 0
 	}
-	bt := (*BigText[T])(unsafe.Pointer(p))
+	bt := p.(*BigText[T]) //(unsafe.Pointer(p))
 	if bt == nil {
 		return 0
 	}
@@ -118,7 +117,7 @@ func (b *Badge[T]) bigTextSetText2(ref uint32, ptr uint32, sz uint32) uint32 {
 		println("bigTextSetText2: reference not found")
 		return 0
 	}
-	bt := (*BigText[T])(unsafe.Pointer(p))
+	bt := p.(*BigText[T]) //(unsafe.Pointer(p))
 	if bt == nil {
 		return 0
 	}
@@ -135,7 +134,7 @@ func (b *Badge[T]) bigTextShow(ref uint32) uint32 {
 		println("bigTextSetText1: reference not found")
 		return 0
 	}
-	bt := (*BigText[T])(unsafe.Pointer(p))
+	bt := p.(*BigText[T]) //(unsafe.Pointer(p))
 	if bt == nil {
 		return 0
 	}
@@ -145,6 +144,7 @@ func (b *Badge[T]) bigTextShow(ref uint32) uint32 {
 }
 
 func (b *Badge[T]) newImage(ptr uint32, sz uint32) uint32 {
+	println("newImage", ptr, sz)
 	data, err := b.Engine.Interpreter.MemoryData(ptr, sz)
 	if err != nil {
 		println(err.Error())
@@ -152,7 +152,7 @@ func (b *Badge[T]) newImage(ptr uint32, sz uint32) uint32 {
 	}
 
 	// load the image
-	qoi, err := image.NewQOI[T](string(data))
+	qoi, err := image.NewQOIFromBytes[T](data)
 	if err != nil {
 		println(err.Error())
 		return 0
@@ -164,7 +164,7 @@ func (b *Badge[T]) newImage(ptr uint32, sz uint32) uint32 {
 		return 0
 	}
 
-	id := uint32(b.Engine.Interpreter.References().Add(unsafe.Pointer(img)))
+	id := uint32(b.Engine.Interpreter.References().Add(img))
 	return id
 }
 
@@ -175,7 +175,7 @@ func (b *Badge[T]) imageShow(ref uint32) uint32 {
 		println("imageShow: reference not found")
 		return 0
 	}
-	img := (*Image[T])(unsafe.Pointer(p))
+	img := p.(*Image[T]) //(unsafe.Pointer(p))
 	if img == nil {
 		return 0
 	}

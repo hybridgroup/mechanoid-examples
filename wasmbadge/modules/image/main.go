@@ -7,7 +7,7 @@ import (
 )
 
 //go:embed tinygo-logo.qoi
-var data string
+var data []byte
 
 var (
 	img *Image
