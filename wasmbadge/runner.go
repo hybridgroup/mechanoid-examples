@@ -10,29 +10,24 @@ import (
 	"tinygo.org/x/drivers/pixel"
 )
 
-func runWASM[T pixel.Color](module string, f engine.Reader, d *display.Device[T]) error {
+func runWASM[T pixel.Color](module string, d *display.Device[T]) error {
 	println("Running WASM module", module)
 	ms := runtime.MemStats{}
 
 	runtime.ReadMemStats(&ms)
 	println("Heap start runWASM Used: ", ms.HeapInuse, " Free: ", ms.HeapIdle, " Meta: ", ms.GCSys)
 
-	// moduleData, err := modules.ReadFile("modules/" + module)
-	// if err != nil {
-	// 	return err
-	// }
-	// defer func() {
-	// 	moduleData = slices.Delete(moduleData, 0, len(moduleData))
-	// 	moduleData = nil
-	// }()
+	f, err := modules.Open("modules/" + module)
+	if err != nil {
+		return err
+	}
 
-	runtime.ReadMemStats(&ms)
-	println("Heap after readfile runWASM Used: ", ms.HeapInuse, " Free: ", ms.HeapIdle, " Meta: ", ms.GCSys)
-
-	if err := eng.Interpreter.Load(f); err != nil {
+	if err := eng.Interpreter.Load(f.(engine.Reader)); err != nil {
 		println(err.Error())
 		return err
 	}
+
+	f.Close()
 
 	runtime.ReadMemStats(&ms)
 	println("Heap after interp load runWASM Used: ", ms.HeapInuse, " Free: ", ms.HeapIdle, " Meta: ", ms.GCSys)

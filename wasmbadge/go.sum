@@ -51,8 +51,6 @@ github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da/go.mod h1:Q73ZrmV
 github.com/armon/go-radix v0.0.0-20180808171621-7fddfc383310/go.mod h1:ufUuZ+zHj4x4TnLV4JWEpy2hxWSpsRywHrMgIH9cCH8=
 github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def h1:t/AKI8sHVbNN6tbrY7tkxe1AvCSTGz+UeRqb6icRZGM=
 github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def/go.mod h1:2OaKBLoD+7BrLyyzJY7j4ySZheoxxWRKfZt6HmnNKrc=
-github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182 h1:aJjM/rs56OvexAZKgSxzBthIUPyFwMQGGyNXqy3CQpI=
-github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182/go.mod h1:0ySBIfp4NY0yGfmuvQ9khOFFDcjsfmlxvKwtNvVQfmA=
 github.com/bgentry/speakeasy v0.1.0/go.mod h1:+zsyZBPWlz7T6j88CTgSN5bM796AkVf0kBD4zp0CCIs=
 github.com/bketelsen/crypt v0.0.4/go.mod h1:aI6NrJ0pMGgvZKL1iVgXLnfIFJtfV+bKCoqOes/6LfM=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
@@ -200,10 +198,8 @@ github.com/hashicorp/logutils v1.0.0/go.mod h1:QIAnNjmIWmVIIkWDTG1z5v++HQmx9WQRO
 github.com/hashicorp/mdns v1.0.0/go.mod h1:tL+uN++7HEJ6SQLQ2/p+z2pH24WQKWjBPkE0mNTz8vQ=
 github.com/hashicorp/memberlist v0.1.3/go.mod h1:ajVTdAv/9Im8oMAAj5G31PhhMCZJV2pPBoIllUwCN7I=
 github.com/hashicorp/serf v0.8.2/go.mod h1:6hOLApaqBFA1NXqRQAsxw9QxuDEvNxSQRwA/JwenrHc=
-github.com/hybridgroup/mechanoid v0.0.0-20240301084957-59def5e03792 h1:yk7R096wgJ7Ekn5GBXHahew+GwusjxFXXJ8cVDYorRQ=
-github.com/hybridgroup/mechanoid v0.0.0-20240301084957-59def5e03792/go.mod h1:Wwv4M6aVB7554PaAYP2tm3NNNJwJK3BnJP8Pp7RxQJo=
-github.com/hybridgroup/wasman v0.0.0-20240229144219-f3288962ab34 h1:XGX7Qt+ylSTF7VrwfXePwXAy2cK2iB6At+Ni/PcaNok=
-github.com/hybridgroup/wasman v0.0.0-20240229144219-f3288962ab34/go.mod h1:rLavUo4P0xVcDeDnViYEpPQPoACmp1py9UTLPY/R7Lg=
+github.com/hybridgroup/wasman v0.0.0-20240303182434-3a2421e3dcbd h1:yRqJVyHjJKZqKc1KtEmBv1qIQE9Ty1MMECenJUbStFQ=
+github.com/hybridgroup/wasman v0.0.0-20240303182434-3a2421e3dcbd/go.mod h1:rLavUo4P0xVcDeDnViYEpPQPoACmp1py9UTLPY/R7Lg=
 github.com/ianlancetaylor/demangle v0.0.0-20181102032728-5e5cf60278f6/go.mod h1:aSSvb/t6k1mPoxDqO4vJh6VOCGPwU4O0C2/Eqndh1Sc=
 github.com/ianlancetaylor/demangle v0.0.0-20200824232613-28f6c0f3b639/go.mod h1:aSSvb/t6k1mPoxDqO4vJh6VOCGPwU4O0C2/Eqndh1Sc=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
