@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"runtime"
 	"time"
 
@@ -184,7 +185,7 @@ func load(argv []string) {
 		return
 	}
 
-	if err := eng.Interpreter.Load(data); err != nil {
+	if err := eng.Interpreter.Load(bytes.NewReader(data)); err != nil {
 		println(err.Error())
 		return
 	}
@@ -269,7 +270,7 @@ func halt(argv []string) {
 	}
 
 	println("halting...")
-	eng.Interpreter.Halt()
+	_ = eng.Interpreter.Halt()
 	instance = nil
 	running = false
 	runtime.GC()

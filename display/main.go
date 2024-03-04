@@ -1,12 +1,14 @@
 package main
 
 import (
+	"bytes"
 	_ "embed"
 	"time"
 
 	"github.com/aykevl/board"
 	"github.com/hybridgroup/mechanoid/engine"
 	"github.com/hybridgroup/mechanoid/interp/wasman"
+	"github.com/orsinium-labs/wypes"
 )
 
 //go:embed modules/ping.wasm
@@ -30,17 +32,23 @@ func main() {
 	println("Initializing engine...")
 	eng.Init()
 
-	if err := eng.Interpreter.DefineFunc("hosted", "pong", func() {
-		pongCount++
-		println("pong", pongCount)
-		display.Pong(pongCount)
-	}); err != nil {
+	modules := wypes.Modules{
+		"hosted": wypes.Module{
+			"pong": wypes.H0(func() wypes.Void {
+				pongCount++
+				println("pong", pongCount)
+				display.Pong(pongCount)
+				return wypes.Void{}
+			}),
+		},
+	}
+	if err := eng.Interpreter.SetModules(modules); err != nil {
 		println(err.Error())
 		return
 	}
 
 	println("Loading module...")
-	if err := eng.Interpreter.Load(pingModule); err != nil {
+	if err := eng.Interpreter.Load(bytes.NewReader(pingModule)); err != nil {
 		println(err.Error())
 		return
 	}

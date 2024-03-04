@@ -6,6 +6,7 @@ import (
 
 	"github.com/hybridgroup/mechanoid/engine"
 	"github.com/hybridgroup/mechanoid/interp/wasman"
+	"github.com/orsinium-labs/wypes"
 )
 
 var (
@@ -27,28 +28,35 @@ func main() {
 	eng.UseFileStore(fs)
 
 	println("Initializing engine...")
-	eng.Init()
-
-	if err := eng.Interpreter.DefineFunc("hosted", "pong", pongFunc); err != nil {
+	err := eng.Init()
+	if err != nil {
 		println(err.Error())
 		return
 	}
 
-	if err := eng.Interpreter.DefineFunc("env", "hola", holaFunc); err != nil {
+	modules := wypes.Modules{
+		"hosted": wypes.Module{
+			"pong": wypes.H0(pongFunc),
+		},
+		"env": wypes.Module{
+			"hola": wypes.H2(holaFunc),
+		},
+	}
+	if err := eng.Interpreter.SetModules(modules); err != nil {
 		println(err.Error())
 		return
 	}
-
 	// start up CLI
 	cli()
 }
 
-func pongFunc() {
+func pongFunc() wypes.Void {
 	println("pong")
+	return wypes.Void{}
 }
 
-func holaFunc(ptr uint32, size uint32) uint32 {
-	msg, err := eng.Interpreter.MemoryData(ptr, size)
+func holaFunc(ptr wypes.UInt32, size wypes.UInt32) wypes.UInt32 {
+	msg, err := eng.Interpreter.MemoryData(ptr.Unwrap(), size.Unwrap())
 	if err != nil {
 		println(err.Error())
 		return 0

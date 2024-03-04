@@ -2,7 +2,6 @@
 
 Application that has a Command line interface to save/load/run WASM modules using the onboard Flash storage.
 
-
 ## How to run
 
 ### Flash the board
@@ -16,7 +15,7 @@ $ mecha flash -m pybadge
 
 Connected to /dev/ttyACM0. Press Ctrl-C to exit.
 
-==> 
+==>
 
 ```
 
@@ -36,18 +35,17 @@ Connected to /dev/ttyACM0. Press Ctrl-C to exit.
 
 You should see the `==>` prompt. See "How to use" below.
 
-
 ## How to use
 
 You should see a `==>` prompt. Try the `lsblk` command to see the Flash storage information:
 
 ```
-==> lsblk                                                   
--------------------------------------                                                                                                             
- Device Information:  
--------------------------------------                                    
+==> lsblk
+-------------------------------------
+ Device Information:
+-------------------------------------
  flash data start: 0x00024000
- flash data end:   0x00080000                                            
+ flash data end:   0x00080000
 -------------------------------------
 ```
 
@@ -56,12 +54,12 @@ This the the available Flash memory on your board in the extra space not being u
 Try the `ls` command.
 
 ```
-==> ls         
-                                    
--------------------------------------                                    
- File Store:  
+==> ls
+
 -------------------------------------
-                                    
+ File Store:
+-------------------------------------
+
 -------------------------------------
 ```
 
@@ -84,7 +82,7 @@ Connected to /dev/ttyACM0. Press Ctrl-C to exit.
 ==> ls
 
 -------------------------------------
- File Store:  
+ File Store:
 -------------------------------------
 370 ping.wasm
 
