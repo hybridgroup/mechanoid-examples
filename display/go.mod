@@ -2,10 +2,12 @@ module github.com/hybridgroup/mechanoid-examples/display
 
 go 1.22.0
 
+replace github.com/tetratelabs/wazero => github.com/orsinium-forks/wazero v0.0.0-20240217173836-b12c024bcbe4
+
 require (
 	github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def
 	github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182
-	github.com/hybridgroup/mechanoid v0.0.0-20240302100128-428e70966f11
+	github.com/hybridgroup/mechanoid v0.0.0-20240304181006-954af02ce585
 	github.com/orsinium-labs/wypes v0.1.1
 	tinygo.org/x/drivers v0.26.1-0.20231124130000-fef6564044f9
 )

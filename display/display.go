@@ -28,7 +28,7 @@ func NewDisplayDevice[T pixel.Color](disp board.Displayer[T]) DisplayDevice[T] {
 	buf := pixel.NewImage[T](int(width), int(height)/4)
 	screen := tinygl.NewScreen[T](disp, buf, board.Display.PPI())
 	theme := basic.NewTheme(style.NewScale(scalePercent), screen)
-	header := theme.NewText("Hello, TinyWASM")
+	header := theme.NewText("Hello, Mechanoid")
 	pingText := theme.NewText("waiting...")
 	pongText := theme.NewText("waiting...")
 

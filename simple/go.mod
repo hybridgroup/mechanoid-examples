@@ -2,8 +2,10 @@ module github.com/hybridgroup/mechanoid-examples/simple
 
 go 1.22.0
 
+replace github.com/tetratelabs/wazero => github.com/orsinium-forks/wazero v0.0.0-20240217173836-b12c024bcbe4
+
 require (
-	github.com/hybridgroup/mechanoid v0.0.0-20240302100128-428e70966f11
+	github.com/hybridgroup/mechanoid v0.0.0-20240304181006-954af02ce585
 	github.com/orsinium-labs/wypes v0.1.1
 )
 
