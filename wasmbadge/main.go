@@ -6,7 +6,7 @@ import (
 
 	"github.com/aykevl/board"
 	"github.com/hybridgroup/mechanoid/engine"
-	"github.com/hybridgroup/mechanoid/interp/wazero"
+	"github.com/hybridgroup/mechanoid/interp/wasman"
 	"tinygo.org/x/drivers/pixel"
 
 	"github.com/hybridgroup/mechanoid-examples/wasmbadge/devices/badge"
@@ -27,7 +27,9 @@ func main() {
 	println("Mechanoid engine starting...")
 	eng = engine.NewEngine()
 
-	intp = &wazero.Interpreter{}
+	intp = &wasman.Interpreter{
+		Memory: make([]byte, 65536),
+	}
 
 	println("Using interpreter", intp.Name())
 	eng.UseInterpreter(intp)
