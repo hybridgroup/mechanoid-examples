@@ -4,6 +4,7 @@ import (
 	"github.com/aykevl/tinygl/image"
 	"github.com/hybridgroup/mechanoid-examples/wasmbadge/devices/display"
 	"github.com/hybridgroup/mechanoid/engine"
+	"github.com/orsinium-labs/wypes"
 	"tinygo.org/x/drivers/pixel"
 )
 
@@ -25,37 +26,22 @@ func (b *Badge[T]) Init() error {
 		return engine.ErrInvalidEngine
 	}
 
-	if err := b.Engine.Interpreter.DefineFunc("bigtext", "new", b.newBigText); err != nil {
-		println(err.Error())
-		return err
-	}
+	return b.Engine.Interpreter.SetModules(b.Modules())
+}
 
-	if err := b.Engine.Interpreter.DefineFunc("bigtext", "text1", b.bigTextSetText1); err != nil {
-		println(err.Error())
-		return err
+func (b *Badge[T]) Modules() wypes.Modules {
+	return wypes.Modules{
+		"bigtext": {
+			"new":   wypes.H2(b.newBigText),
+			"text1": wypes.H3(b.bigTextSetText1),
+			"text2": wypes.H3(b.bigTextSetText2),
+			"show":  wypes.H1(b.bigTextShow),
+		},
+		"image": {
+			"new":  wypes.H2(b.newImage),
+			"show": wypes.H1(b.imageShow),
+		},
 	}
-
-	if err := b.Engine.Interpreter.DefineFunc("bigtext", "text2", b.bigTextSetText2); err != nil {
-		println(err.Error())
-		return err
-	}
-
-	if err := b.Engine.Interpreter.DefineFunc("bigtext", "show", b.bigTextShow); err != nil {
-		println(err.Error())
-		return err
-	}
-
-	if err := b.Engine.Interpreter.DefineFunc("image", "new", b.newImage); err != nil {
-		println(err.Error())
-		return err
-	}
-
-	if err := b.Engine.Interpreter.DefineFunc("image", "show", b.imageShow); err != nil {
-		println(err.Error())
-		return err
-	}
-
-	return nil
 }
 
 func (b *Badge[T]) UseDisplay(d *display.Device[T]) error {
@@ -63,9 +49,9 @@ func (b *Badge[T]) UseDisplay(d *display.Device[T]) error {
 	return nil
 }
 
-func (b *Badge[T]) newBigText(ptr uint32, sz uint32) uint32 {
+func (b *Badge[T]) newBigText(ptr wypes.UInt32, sz wypes.UInt32) wypes.UInt32 {
 	println("newBigText", ptr, sz)
-	msg, err := b.Engine.Interpreter.MemoryData(ptr, sz)
+	msg, err := b.Engine.Interpreter.MemoryData(ptr.Unwrap(), sz.Unwrap())
 	if err != nil {
 		println(err.Error())
 		return 0
@@ -78,12 +64,11 @@ func (b *Badge[T]) newBigText(ptr uint32, sz uint32) uint32 {
 	}
 	bt.Show(b.Display)
 
-	id := uint32(b.Engine.Interpreter.References().Add(bt))
-	return id
+	return wypes.UInt32(b.Engine.Interpreter.References().Add(bt))
 }
 
-func (b *Badge[T]) bigTextSetText1(ref uint32, ptr uint32, sz uint32) uint32 {
-	msg, err := b.Engine.Interpreter.MemoryData(ptr, sz)
+func (b *Badge[T]) bigTextSetText1(ref wypes.UInt32, ptr wypes.UInt32, sz wypes.UInt32) wypes.UInt32 {
+	msg, err := b.Engine.Interpreter.MemoryData(ptr.Unwrap(), sz.Unwrap())
 	if err != nil {
 		println(err.Error())
 		return 0
@@ -104,8 +89,8 @@ func (b *Badge[T]) bigTextSetText1(ref uint32, ptr uint32, sz uint32) uint32 {
 	return sz
 }
 
-func (b *Badge[T]) bigTextSetText2(ref uint32, ptr uint32, sz uint32) uint32 {
-	msg, err := b.Engine.Interpreter.MemoryData(ptr, sz)
+func (b *Badge[T]) bigTextSetText2(ref wypes.UInt32, ptr wypes.UInt32, sz wypes.UInt32) wypes.UInt32 {
+	msg, err := b.Engine.Interpreter.MemoryData(ptr.Unwrap(), sz.Unwrap())
 	if err != nil {
 		println(err.Error())
 		return 0
@@ -127,9 +112,9 @@ func (b *Badge[T]) bigTextSetText2(ref uint32, ptr uint32, sz uint32) uint32 {
 	return sz
 }
 
-func (b *Badge[T]) bigTextShow(ref uint32) uint32 {
+func (b *Badge[T]) bigTextShow(ref wypes.UInt32) wypes.UInt32 {
 	// get the badge UI element by reference
-	p := b.Engine.Interpreter.References().Get(int32(ref))
+	p := b.Engine.Interpreter.References().Get(int32(ref.Unwrap()))
 	if p == uintptr(0) {
 		println("bigTextSetText1: reference not found")
 		return 0
@@ -143,9 +128,9 @@ func (b *Badge[T]) bigTextShow(ref uint32) uint32 {
 	return 1
 }
 
-func (b *Badge[T]) newImage(ptr uint32, sz uint32) uint32 {
+func (b *Badge[T]) newImage(ptr wypes.UInt32, sz wypes.UInt32) wypes.UInt32 {
 	println("newImage", ptr, sz)
-	data, err := b.Engine.Interpreter.MemoryData(ptr, sz)
+	data, err := b.Engine.Interpreter.MemoryData(ptr.Unwrap(), sz.Unwrap())
 	if err != nil {
 		println(err.Error())
 		return 0
@@ -164,13 +149,12 @@ func (b *Badge[T]) newImage(ptr uint32, sz uint32) uint32 {
 		return 0
 	}
 
-	id := uint32(b.Engine.Interpreter.References().Add(img))
-	return id
+	return wypes.UInt32(b.Engine.Interpreter.References().Add(img))
 }
 
-func (b *Badge[T]) imageShow(ref uint32) uint32 {
+func (b *Badge[T]) imageShow(ref wypes.UInt32) wypes.UInt32 {
 	// get the badge UI element by reference
-	p := b.Engine.Interpreter.References().Get(int32(ref))
+	p := b.Engine.Interpreter.References().Get(int32(ref.Unwrap()))
 	if p == uintptr(0) {
 		println("imageShow: reference not found")
 		return 0
