@@ -1,8 +1,7 @@
 package badge
 
 import (
-	"unsafe"
-
+	"github.com/aykevl/tinygl/image"
 	"github.com/hybridgroup/mechanoid-examples/wasmbadge/devices/display"
 	"github.com/hybridgroup/mechanoid/engine"
 	"github.com/orsinium-labs/wypes"
@@ -13,6 +12,8 @@ type Badge[T pixel.Color] struct {
 	Engine  *engine.Engine
 	Display *display.Device[T]
 }
+
+const moduleName = "badge"
 
 func NewDevice[T pixel.Color](e *engine.Engine) *Badge[T] {
 	return &Badge[T]{
@@ -25,22 +26,22 @@ func (b *Badge[T]) Init() error {
 		return engine.ErrInvalidEngine
 	}
 
-	modules := wypes.Modules{
-		"badge": wypes.Module{
-			"new_big_text": wypes.H2(b.newBigText),
-		},
-		"bigtext": wypes.Module{
-			"set_text1": wypes.H3(b.bigTextSetText1),
-			"set_text2": wypes.H3(b.bigTextSetText2),
-			"show":      wypes.H1(b.bigTextShow),
-		},
-	}
-	if err := b.Engine.Interpreter.SetModules(modules); err != nil {
-		println(err.Error())
-		return err
-	}
+	return b.Engine.Interpreter.SetModules(b.Modules())
+}
 
-	return nil
+func (b *Badge[T]) Modules() wypes.Modules {
+	return wypes.Modules{
+		"bigtext": {
+			"new":   wypes.H2(b.newBigText),
+			"text1": wypes.H3(b.bigTextSetText1),
+			"text2": wypes.H3(b.bigTextSetText2),
+			"show":  wypes.H1(b.bigTextShow),
+		},
+		"image": {
+			"new":  wypes.H2(b.newImage),
+			"show": wypes.H1(b.imageShow),
+		},
+	}
 }
 
 func (b *Badge[T]) UseDisplay(d *display.Device[T]) error {
@@ -49,24 +50,30 @@ func (b *Badge[T]) UseDisplay(d *display.Device[T]) error {
 }
 
 func (b *Badge[T]) newBigText(ptr wypes.UInt32, sz wypes.UInt32) wypes.UInt32 {
+	println("newBigText", ptr.Unwrap(), sz.Unwrap())
 	msg, err := b.Engine.Interpreter.MemoryData(ptr.Unwrap(), sz.Unwrap())
 	if err != nil {
 		println(err.Error())
 		return 0
 	}
 
+	println("creating big text", string(msg))
 	// create the badge UI element
 	bt := NewBigText[T](b.Display, "WASM Badge", string(msg), "")
 	if bt == nil {
 		return 0
 	}
+
+	println("showing big text")
 	bt.Show(b.Display)
 
-	id := wypes.UInt32(b.Engine.Interpreter.References().Add(unsafe.Pointer(bt)))
-	return id
+	id := b.Engine.Interpreter.References().Add(bt)
+	println("adding big text to references", id)
+	return wypes.UInt32(id)
 }
 
 func (b *Badge[T]) bigTextSetText1(ref wypes.UInt32, ptr wypes.UInt32, sz wypes.UInt32) wypes.UInt32 {
+	println("bigTextSetText1", ref.Unwrap(), ptr.Unwrap(), sz.Unwrap())
 	msg, err := b.Engine.Interpreter.MemoryData(ptr.Unwrap(), sz.Unwrap())
 	if err != nil {
 		println(err.Error())
@@ -74,12 +81,8 @@ func (b *Badge[T]) bigTextSetText1(ref wypes.UInt32, ptr wypes.UInt32, sz wypes.
 	}
 
 	// get the badge UI element by reference
-	p := b.Engine.Interpreter.References().Get(int32(ref))
-	if p == uintptr(0) {
-		println("bigTextSetText1: reference not found")
-		return 0
-	}
-	bt := (*BigText[T])(unsafe.Pointer(p))
+	p := b.Engine.Interpreter.References().Get(int32(ref.Unwrap()))
+	bt := p.(*BigText[T])
 	if bt == nil {
 		return 0
 	}
@@ -96,12 +99,8 @@ func (b *Badge[T]) bigTextSetText2(ref wypes.UInt32, ptr wypes.UInt32, sz wypes.
 	}
 
 	// get the badge UI element by reference
-	p := b.Engine.Interpreter.References().Get(int32(ref))
-	if p == uintptr(0) {
-		println("bigTextSetText2: reference not found")
-		return 0
-	}
-	bt := (*BigText[T])(unsafe.Pointer(p))
+	p := b.Engine.Interpreter.References().Get(int32(ref.Unwrap()))
+	bt := p.(*BigText[T])
 	if bt == nil {
 		return 0
 	}
@@ -112,17 +111,54 @@ func (b *Badge[T]) bigTextSetText2(ref wypes.UInt32, ptr wypes.UInt32, sz wypes.
 }
 
 func (b *Badge[T]) bigTextShow(ref wypes.UInt32) wypes.UInt32 {
+	println("bigTextShow", ref.Unwrap())
 	// get the badge UI element by reference
-	p := b.Engine.Interpreter.References().Get(int32(ref))
-	if p == uintptr(0) {
-		println("bigTextSetText1: reference not found")
-		return 0
-	}
-	bt := (*BigText[T])(unsafe.Pointer(p))
+	p := b.Engine.Interpreter.References().Get(int32(ref.Unwrap()))
+	bt := p.(*BigText[T])
 	if bt == nil {
 		return 0
 	}
 	bt.Show(b.Display)
+
+	return 1
+}
+
+func (b *Badge[T]) newImage(ptr wypes.UInt32, sz wypes.UInt32) wypes.UInt32 {
+	println("newImage", ptr, sz)
+	data, err := b.Engine.Interpreter.MemoryData(ptr.Unwrap(), sz.Unwrap())
+	if err != nil {
+		println(err.Error())
+		return 0
+	}
+
+	// load the image
+	qoi, err := image.NewQOIFromBytes[T](data)
+	if err != nil {
+		println(err.Error())
+		return 0
+	}
+
+	// create the badge Image UI element
+	img := NewImage[T](b.Display, "Image", qoi)
+	if img == nil {
+		return 0
+	}
+
+	return wypes.UInt32(b.Engine.Interpreter.References().Add(img))
+}
+
+func (b *Badge[T]) imageShow(ref wypes.UInt32) wypes.UInt32 {
+	// get the badge UI element by reference
+	p := b.Engine.Interpreter.References().Get(int32(ref.Unwrap()))
+	if p == uintptr(0) {
+		println("imageShow: reference not found")
+		return 0
+	}
+	img := p.(*Image[T]) //(unsafe.Pointer(p))
+	if img == nil {
+		return 0
+	}
+	img.Show(b.Display)
 
 	return 1
 }

@@ -2,10 +2,14 @@ module github.com/hybridgroup/mechanoid-examples/wasmbadge
 
 go 1.22.0
 
+replace github.com/tetratelabs/wazero => github.com/orsinium-forks/wazero v0.0.0-20240217173836-b12c024bcbe4
+
+replace github.com/aykevl/tinygl => github.com/hybridgroup/tinygl v0.0.0-20240304212432-f1615ec6d2c2
+
 require (
 	github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def
 	github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182
-	github.com/hybridgroup/mechanoid v0.0.0-20240301084957-59def5e03792
+	github.com/hybridgroup/mechanoid v0.0.0-20240304183220-ac665087e97d
 	github.com/orsinium-labs/wypes v0.1.1
 	tinygo.org/x/drivers v0.26.1-0.20231124130000-fef6564044f9
 )

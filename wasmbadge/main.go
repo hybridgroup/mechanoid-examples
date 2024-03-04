@@ -76,7 +76,10 @@ func run[T pixel.Color](d display.Device[T]) {
 			}
 			listbox.Select(index)
 		case board.KeyEnter, board.KeyA:
-			runWASM(menuChoices[listbox.Selected()], &d)
+			module := menuChoices[listbox.Selected()]
+			runWASM(module, &d)
+			eng.Interpreter.Halt()
+
 			home.Show(&d)
 		}
 

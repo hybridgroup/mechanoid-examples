@@ -8,10 +8,10 @@ import (
 func new_big_text(ptr, sz uint32) uint32
 
 //go:wasmimport bigtext text1
-func big_text_set_text1(p, ptr, sz uint32) uint32
+func big_text_set_text1(p uint32, ptr, sz uint32) uint32
 
 //go:wasmimport bigtext text2
-func big_text_set_text2(p, ptr, sz uint32) uint32
+func big_text_set_text2(p uint32, ptr, sz uint32) uint32
 
 //go:wasmimport bigtext show
 func big_text_show(p uint32) uint32
