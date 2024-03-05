@@ -10,7 +10,7 @@ import (
 func new_greeter(ptr, sz uint32) uint32
 
 //go:wasmimport greeter hello
-func greeter_hello(ref, ptr, sz uint32) uint32
+func greeter_hello(ref, ptr, sz uint32)
 
 const (
 	msg  = "Hello, WebAssembly!"
@@ -32,8 +32,8 @@ func start() {
 
 //go:export update
 func update() {
-	start, end := 0, len(msg2)
-	copy(buf[:], msg2)
+	start, end := len(msg), len(msg2)
+	copy(buf[start:], msg2)
 	ptr, sz := convert.BytesToWasmPtr(buf[start:end])
 	greeter_hello(ref, ptr, sz)
 }

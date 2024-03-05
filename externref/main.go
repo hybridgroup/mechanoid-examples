@@ -38,8 +38,8 @@ func main() {
 	println("Defining host function...")
 	modules := wypes.Modules{
 		"greeter": wypes.Module{
-			"new":   wypes.H2(newGreeter),
-			"hello": wypes.H3(hello),
+			"new":   wypes.H1(newGreeter),
+			"hello": wypes.H2(hello),
 		},
 	}
 	if err := eng.Interpreter.SetModules(modules); err != nil {
@@ -61,11 +61,14 @@ func main() {
 	}
 
 	println("Calling start...")
-	ins.Call("start")
-
+	if _, err := ins.Call("start"); err != nil {
+		println(err.Error())
+	}
 	for {
 		println("Calling update...")
-		ins.Call("update")
+		if _, err := ins.Call("update"); err != nil {
+			println(err.Error())
+		}
 
 		time.Sleep(1 * time.Second)
 	}
@@ -75,41 +78,30 @@ type greeter struct {
 	greeting string
 }
 
-func newGreeter(ptr wypes.UInt32, sz wypes.UInt32) wypes.UInt32 {
-	println("newGreeter", ptr.Unwrap(), sz.Unwrap())
-	msg, err := eng.Interpreter.MemoryData(ptr.Unwrap(), sz.Unwrap())
-	if err != nil {
-		println(err.Error())
-		return 0
-	}
-
-	println("newGreeter msg is", string(msg))
+func newGreeter(msg wypes.String) wypes.UInt32 {
+	println("newGreeter msg is", msg.Unwrap())
 
 	// create the badge UI element
 	g := greeter{
-		greeting: string(msg),
+		greeting: msg.Unwrap(),
 	}
 
-	id := wypes.UInt32(eng.Interpreter.References().Add(&g))
-	println("newGreeter id is", id.Unwrap())
-	return id
+	id := eng.Interpreter.References().Add(&g)
+	println("newGreeter id is", id)
+	return wypes.UInt32(id)
 }
 
-func hello(ref, ptr wypes.UInt32, sz wypes.UInt32) wypes.UInt32 {
-	msg, err := eng.Interpreter.MemoryData(ptr.Unwrap(), sz.Unwrap())
-	if err != nil {
-		println(err.Error())
-		return 0
-	}
+func hello(ref wypes.UInt32, msg wypes.String) wypes.Void {
+	println("hello msg is", msg.Unwrap())
 
 	p := eng.Interpreter.References().Get(int32(ref.Unwrap()))
 	if p == nil {
 		println("greet: reference not found", ref.Unwrap())
-		return 0
+		return wypes.Void{}
 	}
 
 	g := p.(*greeter)
-	g.greeting = string(msg)
+	g.greeting = msg.Unwrap()
 
-	return sz
+	return wypes.Void{}
 }
