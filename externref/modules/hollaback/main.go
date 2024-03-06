@@ -32,9 +32,8 @@ func start() {
 
 //go:export update
 func update() {
-	start, end := len(msg), len(msg2)
-	copy(buf[start:], msg2)
-	ptr, sz := convert.BytesToWasmPtr(buf[start:end])
+	copy(buf[:], msg2)
+	ptr, sz := convert.BytesToWasmPtr(buf[:len(msg2)])
 	greeter_hello(ref, ptr, sz)
 }
 

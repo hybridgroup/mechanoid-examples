@@ -6,5 +6,5 @@ github.com/orsinium-forks/wazero v0.0.0-20240217173836-b12c024bcbe4 h1:MUh9e2izc
 github.com/orsinium-forks/wazero v0.0.0-20240217173836-b12c024bcbe4/go.mod h1:0U0G41+ochRKoPKCJlh0jMg1CHkyfK8kDqiirMmKY8A=
 github.com/orsinium-labs/tinytest v1.0.0 h1:YiGm/whlGm3mn/ynx9CCFuvEa3Q6yEGrzrKXEqJOkdc=
 github.com/orsinium-labs/tinytest v1.0.0/go.mod h1:GwcYBp0aKi6zujzBXFpCnqw6RSLSp9JSedDyu/V1DF4=
-github.com/orsinium-labs/wypes v0.1.1 h1:i8J8wDnoJERQoK5JXQomlAYER8MyySgZQPE8hRDvRiM=
-github.com/orsinium-labs/wypes v0.1.1/go.mod h1:FSNWGo8I6/D5RYXMkCxyu71TXJAlwJGQUxgs4i6MAwo=
+github.com/orsinium-labs/wypes v0.1.2 h1:xa+d83u6jkGENM2I63KY1dxTC9S/D2At/rB7EsvU5QY=
+github.com/orsinium-labs/wypes v0.1.2/go.mod h1:FSNWGo8I6/D5RYXMkCxyu71TXJAlwJGQUxgs4i6MAwo=
