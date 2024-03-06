@@ -16,6 +16,8 @@ var wasmModule []byte
 var eng *engine.Engine
 
 func main() {
+	time.Sleep(3 * time.Second)
+
 	println("Mechanoid engine starting...")
 	eng = engine.NewEngine()
 
