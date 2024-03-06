@@ -21,15 +21,22 @@ const (
 )
 
 var (
+	// ref is an externref that is returned from the new_greeter host function.
 	ref uint32
+
+	// buf is a buffer that is used to pass messages to the greeter host instance.
 	buf [64]byte
 )
 
 //go:export start
 func start() {
-	start, end := 0, len(msg)
 	copy(buf[:], msg)
-	ptr, sz := convert.BytesToWasmPtr(buf[start:end])
+	ptr, sz := convert.BytesToWasmPtr(buf[:len(msg)])
+
+	// ref is an externref that is passed to the hello function.
+	// this is an opaque reference to the greeter instance on the host.
+	// The host is responsible for managing the lifetime of the instance.
+	// It is not a pointer to the instance, but a reference to it.
 	ref = new_greeter(ptr, sz)
 	print_u32(ref)
 }
