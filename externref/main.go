@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/hybridgroup/mechanoid/engine"
-	"github.com/hybridgroup/mechanoid/interp/wasman"
+	"github.com/hybridgroup/mechanoid/interp/wazero"
 	"github.com/orsinium-labs/wypes"
 )
 
@@ -16,14 +16,10 @@ var wasmModule []byte
 var eng *engine.Engine
 
 func main() {
-	time.Sleep(3 * time.Second)
-
 	println("Mechanoid engine starting...")
 	eng = engine.NewEngine()
 
-	intp := &wasman.Interpreter{
-		Memory: make([]byte, 65536),
-	}
+	intp := &wazero.Interpreter{}
 
 	println("Using interpreter", intp.Name())
 	eng.UseInterpreter(intp)
@@ -38,8 +34,9 @@ func main() {
 	println("Defining host function...")
 	modules := wypes.Modules{
 		"greeter": wypes.Module{
-			"new":   wypes.H1(newGreeter),
-			"hello": wypes.H2(hello),
+			"new":       wypes.H1(newGreeter),
+			"hello":     wypes.H2(hello),
+			"print_u32": wypes.H1(printU32),
 		},
 	}
 	if err := eng.Interpreter.SetModules(modules); err != nil {
@@ -103,5 +100,10 @@ func hello(ref wypes.UInt32, msg wypes.String) wypes.Void {
 	g := p.(*greeter)
 	g.greeting = msg.Unwrap()
 
+	return wypes.Void{}
+}
+
+func printU32(x wypes.UInt32) wypes.Void {
+	println("got value:", x.Unwrap())
 	return wypes.Void{}
 }
