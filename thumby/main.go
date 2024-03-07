@@ -8,7 +8,7 @@ import (
 	"github.com/hybridgroup/mechanoid-examples/thumby/devices/display"
 	"github.com/hybridgroup/mechanoid/convert"
 	"github.com/hybridgroup/mechanoid/engine"
-	"github.com/hybridgroup/mechanoid/interp/wazero"
+	"github.com/hybridgroup/mechanoid/interp"
 	"github.com/orsinium-labs/wypes"
 )
 
@@ -27,8 +27,7 @@ func main() {
 	println("Mechanoid engine starting...")
 	eng = engine.NewEngine()
 
-	intp := &wazero.Interpreter{}
-
+	intp := interp.NewInterpreter()
 	println("Using interpreter", intp.Name())
 	eng.UseInterpreter(intp)
 
