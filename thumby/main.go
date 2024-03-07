@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/hybridgroup/mechanoid-examples/thumby/devices/display"
+	"github.com/hybridgroup/mechanoid/convert"
 	"github.com/hybridgroup/mechanoid/engine"
 	"github.com/hybridgroup/mechanoid/interp/wazero"
 	"github.com/orsinium-labs/wypes"
@@ -14,7 +15,11 @@ import (
 //go:embed modules/ping.wasm
 var wasmModule []byte
 
-var eng *engine.Engine
+var (
+	eng *engine.Engine
+
+	pingcount, pongcount int
+)
 
 func main() {
 	time.Sleep(3 * time.Second)
@@ -63,8 +68,9 @@ func main() {
 
 	for {
 		eng.Devices[0].(*display.Device).Clear()
-		println("Calling ping...")
-		eng.Devices[0].(*display.Device).ShowMessage(5, 10, "ping")
+		pingcount++
+		println("Calling ping", pingcount)
+		eng.Devices[0].(*display.Device).ShowMessage(5, 10, "ping "+convert.IntToString(pingcount))
 		_, _ = ins.Call("ping")
 
 		time.Sleep(1 * time.Second)
@@ -72,7 +78,8 @@ func main() {
 }
 
 func pongFunc() wypes.Void {
-	println("pong")
-	eng.Devices[0].(*display.Device).ShowMessage(5, 30, "pong")
+	pongcount++
+	println("pong", pongcount)
+	eng.Devices[0].(*display.Device).ShowMessage(5, 30, "pong "+convert.IntToString(pongcount))
 	return wypes.Void{}
 }

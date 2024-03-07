@@ -9,7 +9,7 @@ import (
 	"github.com/orsinium-labs/wypes"
 	"tinygo.org/x/drivers/ssd1306"
 	"tinygo.org/x/tinyfont"
-	"tinygo.org/x/tinyfont/freemono"
+	"tinygo.org/x/tinyfont/proggy"
 )
 
 var white = color.RGBA{255, 255, 255, 255}
@@ -51,6 +51,6 @@ func (d *Device) Clear() {
 }
 
 func (d *Device) ShowMessage(x, y int, msg string) {
-	tinyfont.WriteLine(&d.display, &freemono.Bold9pt7b, int16(x), int16(y), msg, white)
+	tinyfont.WriteLine(&d.display, &proggy.TinySZ8pt7b, int16(x), int16(y), msg, white)
 	d.display.Display()
 }
