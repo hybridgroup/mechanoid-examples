@@ -5,8 +5,8 @@ go 1.22.0
 replace github.com/tetratelabs/wazero => github.com/orsinium-forks/wazero v0.0.0-20240217173836-b12c024bcbe4
 
 require (
-	github.com/hybridgroup/mechanoid v0.0.0-20240304181006-954af02ce585
-	github.com/orsinium-labs/wypes v0.1.1
+	github.com/hybridgroup/mechanoid v0.0.0-20240308111911-97652132727d
+	github.com/orsinium-labs/wypes v0.1.4
 	go.bug.st/serial v1.6.2
 )
 

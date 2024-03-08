@@ -9,14 +9,14 @@ Application that has a Command line interface to save/load/run WASM modules usin
 #### PyBadge
 
 ```
-$ mecha flash -m pybadge
-   code    data     bss |   flash     ram
- 130368    2148    6888 |  132516    9036
-
+$ mecha flash -i wazero -m pybadge
+Application built. Now flashing...
+   code    data     bss |   flash     ram                                                                                                                                    
+ 356820   66124    7320 |  422944   73444
 Connected to /dev/ttyACM0. Press Ctrl-C to exit.
-
+Mounting new filesystem...
+Initializing devices...
 ==>
-
 ```
 
 You should see the `==>` prompt. See "How to use" below.
@@ -76,7 +76,7 @@ go run ./savefile ./ping.wasm /dev/ttyACM0
 Now connect again to the board, and now you should see the file listed using the `ls` command:
 
 ```
-$ tinygo monitor
+$ mecha monitor
 Connected to /dev/ttyACM0. Press Ctrl-C to exit.
 
 ==> ls
