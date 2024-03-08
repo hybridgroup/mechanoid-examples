@@ -31,12 +31,11 @@ func main() {
 	println("Using interpreter", intp.Name())
 	eng.UseInterpreter(intp)
 
-	println("Using display")
-	eng.AddDevice(display.NewDevice(eng))
+	disp := &display.Device{}
+	eng.AddDevice(disp)
 
 	println("Initializing engine...")
-	err := eng.Init()
-	if err != nil {
+	if err := eng.Init(); err != nil {
 		println(err.Error())
 		return
 	}
@@ -66,11 +65,15 @@ func main() {
 	}
 
 	for {
-		eng.Devices[0].(*display.Device).Clear()
 		pingcount++
 		println("Calling ping", pingcount)
-		eng.Devices[0].(*display.Device).ShowMessage(5, 10, "ping "+convert.IntToString(pingcount))
-		_, _ = ins.Call("ping")
+
+		disp.Clear()
+		disp.ShowMessage(5, 10, "ping "+convert.IntToString(pingcount))
+
+		if _, err := ins.Call("ping"); err != nil {
+			println(err.Error())
+		}
 
 		time.Sleep(1 * time.Second)
 	}
@@ -78,7 +81,10 @@ func main() {
 
 func pongFunc() wypes.Void {
 	pongcount++
+
 	println("pong", pongcount)
+
 	eng.Devices[0].(*display.Device).ShowMessage(5, 30, "pong "+convert.IntToString(pongcount))
+
 	return wypes.Void{}
 }

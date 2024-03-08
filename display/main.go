@@ -34,7 +34,7 @@ func run[T pixel.Color](disp board.Displayer[T]) {
 	eng = engine.NewEngine()
 
 	println("Adding display device...")
-	eng.AddDevice(display.NewDevice(eng, disp))
+	eng.AddDevice(display.NewDevice(disp))
 
 	intp := interp.NewInterpreter()
 	println("Using interpreter", intp.Name())
@@ -59,7 +59,11 @@ func run[T pixel.Color](disp board.Displayer[T]) {
 	for {
 		pingCount++
 		println("Ping", pingCount)
-		ins.Call("ping")
+
+		if _, err := ins.Call("ping"); err != nil {
+			println(err.Error())
+		}
+
 		eng.Devices[0].(*display.Device[T]).ShowPing(pingCount)
 
 		time.Sleep(1 * time.Second)

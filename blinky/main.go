@@ -23,7 +23,7 @@ func main() {
 	println("Using interpreter", intp.Name())
 	eng.UseInterpreter(intp)
 
-	eng.AddDevice(hardware.NewGPIODevice(eng))
+	eng.AddDevice(hardware.GPIO{})
 
 	println("Initializing engine...")
 	eng.Init()
@@ -42,11 +42,15 @@ func main() {
 	}
 
 	println("Calling setup...")
-	ins.Call("setup")
+	if _, err := ins.Call("setup"); err != nil {
+		println(err.Error())
+	}
 
 	for {
 		println("Calling loop...")
-		ins.Call("loop")
+		if _, err := ins.Call("loop"); err != nil {
+			println(err.Error())
+		}
 
 		time.Sleep(1 * time.Second)
 	}

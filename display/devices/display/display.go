@@ -6,7 +6,6 @@ import (
 	"github.com/aykevl/tinygl/style"
 	"github.com/aykevl/tinygl/style/basic"
 	"github.com/hybridgroup/mechanoid/convert"
-	"github.com/hybridgroup/mechanoid/engine"
 	"github.com/orsinium-labs/wypes"
 	"tinygo.org/x/drivers/pixel"
 )
@@ -14,7 +13,6 @@ import (
 var pongCount int
 
 type Device[T pixel.Color] struct {
-	eng      *engine.Engine
 	Display  board.Displayer[T]
 	Screen   *tinygl.Screen[T]
 	Theme    *basic.Basic[T]
@@ -25,9 +23,8 @@ type Device[T pixel.Color] struct {
 }
 
 // NewDevice creates a new display device.
-func NewDevice[T pixel.Color](e *engine.Engine, display board.Displayer[T]) *Device[T] {
+func NewDevice[T pixel.Color](display board.Displayer[T]) *Device[T] {
 	return &Device[T]{
-		eng:     e,
 		Display: display,
 	}
 }

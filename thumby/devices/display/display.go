@@ -5,7 +5,6 @@ import (
 
 	"image/color"
 
-	"github.com/hybridgroup/mechanoid/engine"
 	"github.com/orsinium-labs/wypes"
 	"tinygo.org/x/drivers/ssd1306"
 	"tinygo.org/x/tinyfont"
@@ -15,15 +14,7 @@ import (
 var white = color.RGBA{255, 255, 255, 255}
 
 type Device struct {
-	eng     *engine.Engine
 	display ssd1306.Device
-}
-
-// NewDevice creates a new display device.
-func NewDevice(e *engine.Engine) *Device {
-	return &Device{
-		eng: e,
-	}
 }
 
 func (d *Device) Modules() wypes.Modules {
