@@ -6,7 +6,7 @@ replace github.com/tetratelabs/wazero => github.com/orsinium-forks/wazero v0.0.0
 
 require (
 	github.com/hybridgroup/mechanoid v0.0.0-20240306161038-16a074177aa7
-	github.com/orsinium-labs/wypes v0.1.2
+	github.com/orsinium-labs/wypes v0.1.4
 )
 
 require github.com/tetratelabs/wazero v1.6.0 // indirect

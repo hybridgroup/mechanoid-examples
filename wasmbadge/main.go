@@ -39,7 +39,7 @@ func main() {
 
 func run[T pixel.Color](d display.Device[T]) {
 	// badge interface to display API
-	bg := badge.NewDevice[T](eng)
+	bg := badge.NewDevice[T]()
 	bg.UseDisplay(&d)
 
 	// host interface to badge API

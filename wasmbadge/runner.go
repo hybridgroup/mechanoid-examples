@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"time"
 
 	"github.com/aykevl/board"
@@ -16,7 +17,7 @@ func runWASM[T pixel.Color](module string, d *display.Device[T]) error {
 		return err
 	}
 
-	if err := eng.Interpreter.Load(moduleData); err != nil {
+	if err := eng.Interpreter.Load(bytes.NewReader(moduleData)); err != nil {
 		println(err.Error())
 		return err
 	}
