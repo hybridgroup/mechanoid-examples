@@ -13,13 +13,11 @@ import (
 //go:embed modules/hollaback.wasm
 var wasmModule []byte
 
-var eng *engine.Engine
-
 func main() {
 	time.Sleep(3 * time.Second)
 
 	println("Mechanoid engine starting...")
-	eng = engine.NewEngine()
+	eng := engine.NewEngine()
 
 	intp := &wazero.Interpreter{}
 
@@ -77,31 +75,19 @@ type greeter struct {
 	greeting string
 }
 
-func newGreeter(msg wypes.String) wypes.UInt32 {
+func newGreeter(msg wypes.String) wypes.HostRef[greeter] {
 	println("newGreeter msg is", msg.Unwrap())
-
 	// create the badge UI element
 	g := greeter{
 		greeting: msg.Unwrap(),
 	}
-
-	id := eng.Interpreter.References().Add(&g)
-	println("newGreeter id is", id)
-	return wypes.UInt32(id)
+	return wypes.HostRef[greeter]{Raw: g}
 }
 
-func hello(ref wypes.UInt32, msg wypes.String) wypes.Void {
+func hello(ref wypes.HostRef[greeter], msg wypes.String) wypes.Void {
 	println("hello msg is", msg.Unwrap())
-
-	p := eng.Interpreter.References().Get(int32(ref.Unwrap()))
-	if p == nil {
-		println("greet: reference not found", ref.Unwrap())
-		return wypes.Void{}
-	}
-
-	g := p.(*greeter)
+	g := ref.Unwrap()
 	g.greeting = msg.Unwrap()
-
 	return wypes.Void{}
 }
 
