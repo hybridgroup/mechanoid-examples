@@ -1,6 +1,6 @@
 # Filestore
 
-Application that has a Command line interface to save/load/run WASM modules using the onboard Flash storage.
+Application that demonstrates how to use the onboard Flash storage on the hardware device to save/load/run external WASM modules via a Command line interface directly on the device itself.
 
 ## How to run
 

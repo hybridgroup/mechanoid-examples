@@ -1,6 +1,6 @@
 # Simple
 
-Here is an example of an application built using Mechanoid.
+Here is an example of a simple "ping" application built using Mechanoid.
 
 It consists of a host application that runs on a microcontroller, and a separate WebAssembly module that will be run by the host application on that same microcontroller.
 

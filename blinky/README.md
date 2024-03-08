@@ -1,19 +1,36 @@
 # Blink
 
-Example that loads a WASM module `blink.wasm` that can blink an LED.
+Application that loads an embedded WASM program that blinks an LED on the hardware.
 
 ## How to run
 
-### Build the WASM modules
+### Pybadge
 
 ```
-$ mecha build
+$ mecha flash -i wazero -m pybadge
 Building module blink
+Done.
    code    data     bss |   flash     ram
-     68       0       0 |      68       0
+     57       0       0 |      57       0
+Application built. Now flashing...
+   code    data     bss |   flash     ram
+ 331780   66260    7112 |  398040   73372
+Connected to /dev/ttyACM0. Press Ctrl-C to exit.
+Mechanoid engine starting...
+Using interpreter wazero
+Initializing engine...
+Initializing interpreter...
+Initializing devices...
+Loading module...
+Running module...
+Calling setup...
+Calling loop...
+Calling loop...
+Calling loop...
+...
 ```
 
-### Flash the board
+### gopher-badge
 
 ```
 $ mecha flash -m pybadge
