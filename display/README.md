@@ -4,59 +4,67 @@ Application that shows display integration using generics and the board package.
 
 ## How it works
 
-The application can connect to any of the display supported in the `boards` package.
+The application can connect to any of the displays supported in the `boards` package.
 
 It then loads the `ping.wasm` program which is embedded into the application itself.
 
 ## How to run
 
-### Build the WASM modules
+### PyBadge
 
 ```
-$ mecha build                                                             
+$ mecha flash -m -i wazero pybadge
 Building module ping
+Done.
    code    data     bss |   flash     ram
       9       0       0 |       9       0
-```
-
-### Flash the board
-
-PyBadge:
-
-```
-$ mecha flash -m pybadge
+Application built. Now flashing...
    code    data     bss |   flash     ram
- 112188    2044    6696 |  114232    8740
+ 343236   66056    7128 |  409292   73184
 Connected to /dev/ttyACM0. Press Ctrl-C to exit.
 Mechanoid engine starting...
-Using interpreter...
+Adding display device...
+Using interpreter wazero
 Initializing engine...
-Loading module...
+Initializing interpreter...
+Initializing devices...
+Loading WASM module...
 Running module...
-Ping 0
-pong 1
 Ping 1
-pong 2
+Pong 1
+Ping 2
+Pong 2
+Ping 3
+Pong 3
 ...
 ```
 
-Gopher Badge
+### Gopher Badge
 
 ```
-$ mecha flash -m gopher-badge
+$ mecha flash -m -i wazero gopher-badge
+Building module ping
+Done.
    code    data     bss |   flash     ram
- 121452    2048    3228 |  123500    5276
+      9       0       0 |       9       0
+Application built. Now flashing...
+   code    data     bss |   flash     ram
+ 375100   66060    3664 |  441160   69724
 Connected to /dev/ttyACM0. Press Ctrl-C to exit.
 Mechanoid engine starting...
-Using interpreter...
+Adding display device...
+Using interpreter wazero
 Initializing engine...
-Loading module...
+Initializing interpreter...
+Initializing devices...
+Loading WASM module...
 Running module...
-Ping 0
-pong 1
 Ping 1
-pong 2
+Pong 1
 Ping 2
-pong 3
+Pong 2
+Ping 3
+Pong 3
+...
 ...
 ```
