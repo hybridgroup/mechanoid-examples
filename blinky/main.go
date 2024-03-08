@@ -1,27 +1,27 @@
 package main
 
 import (
+	"bytes"
 	_ "embed"
 	"time"
 
 	"github.com/hybridgroup/mechanoid/devices/hardware"
 	"github.com/hybridgroup/mechanoid/engine"
-	"github.com/hybridgroup/mechanoid/interp/wasman"
+	"github.com/hybridgroup/mechanoid/interp"
 )
 
 //go:embed modules/blink.wasm
-var pingModule []byte
+var wasmModule []byte
 
 func main() {
-	time.Sleep(1 * time.Second)
+	time.Sleep(3 * time.Second)
 
 	println("Mechanoid engine starting...")
 	eng := engine.NewEngine()
 
-	println("Using interpreter...")
-	eng.UseInterpreter(&wasman.Interpreter{
-		Memory: make([]byte, 65536),
-	})
+	intp := interp.NewInterpreter()
+	println("Using interpreter", intp.Name())
+	eng.UseInterpreter(intp)
 
 	eng.AddDevice(hardware.NewGPIODevice(eng))
 
@@ -29,7 +29,7 @@ func main() {
 	eng.Init()
 
 	println("Loading module...")
-	if err := eng.Interpreter.Load(pingModule); err != nil {
+	if err := eng.Interpreter.Load(bytes.NewReader(wasmModule)); err != nil {
 		println(err.Error())
 		return
 	}
