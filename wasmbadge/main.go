@@ -23,6 +23,14 @@ var (
 )
 
 func main() {
+	if board.Name == "simulator" {
+		// Use the configuration for the Gopher Badge.
+		board.Simulator.WindowWidth = 320
+		board.Simulator.WindowHeight = 240
+		board.Simulator.WindowPPI = 166
+		board.Simulator.WindowDrawSpeed = time.Second * 16 / 62_500e3 // 62.5MHz, 16bpp
+	}
+
 	run(board.Display.Configure())
 }
 

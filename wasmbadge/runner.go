@@ -52,7 +52,7 @@ func runWASM[T pixel.Color](module string, d *display.Device[T]) error {
 			continue
 		}
 		switch event.Key() {
-		case board.KeySelect:
+		case board.KeySelect, board.KeyEscape:
 			return nil
 		}
 
