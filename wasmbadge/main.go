@@ -2,11 +2,13 @@ package main
 
 import (
 	"embed"
+	"runtime"
 	"time"
 
 	"github.com/aykevl/board"
+	"github.com/hybridgroup/mechanoid"
 	"github.com/hybridgroup/mechanoid/engine"
-	"github.com/hybridgroup/mechanoid/interp/wasman"
+	"github.com/hybridgroup/mechanoid/interp"
 	"tinygo.org/x/drivers/pixel"
 
 	"github.com/hybridgroup/mechanoid-examples/wasmbadge/devices/badge"
@@ -17,27 +19,28 @@ import (
 var modules embed.FS
 
 var (
-	eng  *engine.Engine
-	intp engine.Interpreter
+	eng *engine.Engine
 )
 
 func main() {
-	time.Sleep(1 * time.Second)
+	run(board.Display.Configure())
+}
+
+func run[T pixel.Color](disp board.Displayer[T]) {
+	time.Sleep(2 * time.Second)
+
+	mechanoid.DebugMemory("start of program")
 
 	println("Mechanoid engine starting...")
 	eng = engine.NewEngine()
 
-	intp = &wasman.Interpreter{
-		Memory: make([]byte, 65536),
-	}
-
+	intp := interp.NewInterpreter()
 	println("Using interpreter", intp.Name())
 	eng.UseInterpreter(intp)
 
-	run(display.NewDevice(board.Display.Configure()))
-}
+	d := display.NewDevice[T](disp)
+	d.Init()
 
-func run[T pixel.Color](d display.Device[T]) {
 	// badge interface to display API
 	bg := badge.NewDevice[T]()
 	bg.UseDisplay(&d)
@@ -47,6 +50,8 @@ func run[T pixel.Color](d display.Device[T]) {
 
 	println("Initializing engine...")
 	eng.Init()
+
+	mechanoid.DebugMemory("after engine init")
 
 	board.Buttons.Configure()
 
@@ -76,8 +81,19 @@ func run[T pixel.Color](d display.Device[T]) {
 			}
 			listbox.Select(index)
 		case board.KeyEnter, board.KeyA:
+			home = nil
 			runWASM(menuChoices[listbox.Selected()], &d)
+
+			mechanoid.DebugMemory("after runWASM exit")
+
+			bg.Cleanup()
+			runtime.GC()
+
+			mechanoid.DebugMemory("after runWASM exit GC")
+
+			home = createHome[T](&d)
 			home.Show(&d)
+			listbox = home.ListBox
 		}
 
 		d.Screen.Update()

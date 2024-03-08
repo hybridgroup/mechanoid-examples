@@ -1,3 +1,5 @@
+//go:build tinygo
+
 package main
 
 import (
@@ -21,7 +23,8 @@ type BigText struct {
 }
 
 func NewBigText(msg string) *BigText {
-	ptr, sz := convert.StringToWasmPtr(msg)
+	copy(buf[:], msg)
+	ptr, sz := convert.BytesToWasmPtr(buf[:len(msg)])
 	return &BigText{
 		Ref: new_big_text(ptr, sz),
 	}

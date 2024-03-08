@@ -1,26 +1,34 @@
 package main
 
 import (
-	"bytes"
+	"runtime"
 	"time"
 
 	"github.com/aykevl/board"
+	"github.com/hybridgroup/mechanoid"
 	"github.com/hybridgroup/mechanoid-examples/wasmbadge/devices/display"
+	"github.com/hybridgroup/mechanoid/engine"
 	"tinygo.org/x/drivers/pixel"
 )
 
 func runWASM[T pixel.Color](module string, d *display.Device[T]) error {
 	println("Running WASM module", module)
 
-	moduleData, err := modules.ReadFile("modules/" + module)
+	mechanoid.DebugMemory("start runWASM")
+	runtime.GC()
+	mechanoid.DebugMemory("start runWASM after GC")
+
+	f, err := modules.Open("modules/" + module)
 	if err != nil {
 		return err
 	}
 
-	if err := eng.Interpreter.Load(bytes.NewReader(moduleData)); err != nil {
+	if err := eng.Interpreter.Load(f.(engine.Reader)); err != nil {
 		println(err.Error())
 		return err
 	}
+
+	f.Close()
 
 	println("Running module...")
 	ins, err := eng.Interpreter.Run()
@@ -29,10 +37,14 @@ func runWASM[T pixel.Color](module string, d *display.Device[T]) error {
 		return err
 	}
 
-	ins.Call("start")
+	if _, err := ins.Call("start"); err != nil {
+		println(err.Error())
+	}
 
 	for {
-		ins.Call("update")
+		if _, err := ins.Call("update"); err != nil {
+			println(err.Error())
+		}
 
 		board.Buttons.ReadInput()
 		event := board.Buttons.NextEvent()

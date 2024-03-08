@@ -8,6 +8,7 @@ import (
 
 type Badge[T pixel.Color] struct {
 	Display *display.Device[T]
+	bt      wypes.HostRef[*BigText[T]]
 }
 
 func NewDevice[T pixel.Color]() *Badge[T] {
@@ -36,6 +37,13 @@ func (b *Badge[T]) UseDisplay(d *display.Device[T]) error {
 	return nil
 }
 
+func (b *Badge[T]) Cleanup() error {
+	if b.bt.Raw != nil {
+		b.bt.Drop()
+	}
+	return nil
+}
+
 func (b *Badge[T]) newBigText(msg wypes.String) wypes.HostRef[*BigText[T]] {
 	// create the badge UI element
 	bt := NewBigText[T](b.Display, "WASM Badge", msg.Unwrap(), "")
@@ -43,14 +51,21 @@ func (b *Badge[T]) newBigText(msg wypes.String) wypes.HostRef[*BigText[T]] {
 		return wypes.HostRef[*BigText[T]]{Raw: nil}
 	}
 	bt.Show(b.Display)
-	return wypes.HostRef[*BigText[T]]{Raw: bt}
+	ref := wypes.HostRef[*BigText[T]]{Raw: bt}
+	b.bt = ref
+
+	return ref
 }
 
 func (b *Badge[T]) bigTextSetText1(ref wypes.HostRef[*BigText[T]], msg wypes.String) wypes.UInt32 {
 	// get the badge UI element by reference
 	bt := ref.Unwrap()
 	if bt == nil {
-		return 0
+		if b.bt.Raw == nil {
+			println("bigTextSetText1: ref is nil")
+			return 0
+		}
+		bt = b.bt.Unwrap()
 	}
 	bt.SetText1(msg.Unwrap())
 	return wypes.UInt32(len(msg.Unwrap()))
@@ -60,7 +75,11 @@ func (b *Badge[T]) bigTextSetText2(ref wypes.HostRef[*BigText[T]], msg wypes.Str
 	// get the badge UI element by reference
 	bt := ref.Unwrap()
 	if bt == nil {
-		return 0
+		if b.bt.Raw == nil {
+			println("bigTextSetText2: ref is nil")
+			return 0
+		}
+		bt = b.bt.Unwrap()
 	}
 
 	bt.SetText2(msg.Unwrap())
@@ -71,8 +90,13 @@ func (b *Badge[T]) bigTextShow(ref wypes.HostRef[*BigText[T]]) wypes.UInt32 {
 	// get the badge UI element by reference
 	bt := ref.Unwrap()
 	if bt == nil {
-		return 0
+		if b.bt.Raw == nil {
+			println("bigTextShow: ref is nil")
+			return 0
+		}
+		bt = b.bt.Unwrap()
 	}
+
 	bt.Show(b.Display)
 
 	return 1

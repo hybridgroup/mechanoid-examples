@@ -13,22 +13,19 @@ It then loads the `ping.wasm` program which is embedded into the application its
 
 ## How to run
 
-First compile all of the built-in WASM modules:
-
-```
-mecha build
-```
-
-Now flash the application on to your badge.
-
 ### PyBadge
 
 ```
-mecha flash pybadge
-```
-
-### Gopher Badge
-
-```
-mecha flash gopher-badge
+$ mecha flash -i wasman pybadge
+Building module hithere
+Done.
+   code    data     bss |   flash     ram
+    576      31    4097 |     607    4128
+Building module mynameis
+Done.
+   code    data     bss |   flash     ram
+     15       6    4096 |      21    4102
+Application built. Now flashing...
+   code    data     bss |   flash     ram
+ 131380    1740    6792 |  133120    8532
 ```
