@@ -1,40 +1,49 @@
-# Simple
+# Externalref
 
-Here is an example of an application built using Mechanoid.
+Here is an example of an application built using Mechanoid that uses host external references.
 
-It consists of a host application that runs on a microcontroller, and a separate WebAssembly module that will be run by the host application on that same microcontroller.
-
-The host application loads the WASM and then executes it, sending the output to the serial interface on the board. This way we can see the output on your computer.
+For more information, see https://webassembly.github.io/gc/core/syntax/types.html#reference-types
 
 ## How it works
 
-```mermaid
-flowchart LR
-    subgraph Computer
-    end
-    subgraph Microcontroller
-        subgraph Application
-            Pong
-        end
-        subgraph ping.wasm
-            Ping
-        end
-        Ping-->Pong
-        Application-->Ping
-    end
-    Application--Serial port-->Computer
-```
+The application creates a new module.
 
-## How to run it
+It then loads the `hollaback.wasm` program which is embedded into the application itself.
 
-### Compile the WASM module
+That module is able to obtain an externref to the host instance, and then use it to call the associated host method.
 
-See [ping module](../modules/ping/)
+## How to run
 
-### Compile and flash the microcontroller
+### PyBadge
 
 ```
-tinygo flash -size short -target pybadge -monitor ./simple
+$ mecha flash -i wazero -m pybadge
+Building module hollaback  
+Done.            
+   code    data     bss |   flash     ram
+    112      33   65503 |     145   65536
+Application built. Now flashing...
+   code    data     bss |   flash     ram
+ 331152   66348    7112 |  397500   73460
+Connected to /dev/ttyACM0. Press Ctrl-C to exit.
+Mechanoid engine starting...
+Using interpreter wazero   
+Initializing engine...
+Initializing interpreter...
+Initializing devices...    
+Defining host function...
+Loading WASM module...
+Running module...          
+Calling start...
+newGreeter msg is Hello, WebAssembly!                                                 
+got value: 1
+Calling update...                                                                     
+got value: 1
+hello msg is From Mechanoid
+Calling update...
+got value: 1
+hello msg is From Mechanoid
+Calling update...
+got value: 1
+...
 ```
-
-You should see output start in your terminal from the microcontroller.
