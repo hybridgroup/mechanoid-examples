@@ -9,13 +9,20 @@ Application that demonstrates how to use the onboard Flash storage on the hardwa
 #### PyBadge
 
 ```
-$ mecha flash -i wazero -m pybadge
+$ mecha flash -i wasman -m pybadge                                                     
+Building module hello
+Done.              
+   code    data     bss |   flash     ram
+     64      19    4096 |      83    4115                                             
+Building module ping
+Done.
+   code    data     bss |   flash     ram
+      9       0       0 |       9       0
 Application built. Now flashing...
-   code    data     bss |   flash     ram                                                                                                                                    
- 356820   66124    7320 |  422944   73444
+   code    data     bss |   flash     ram
+ 131440    2124    6888 |  133564    9012
 Connected to /dev/ttyACM0. Press Ctrl-C to exit.
-Mounting new filesystem...
-Initializing devices...
+
 ==>
 ```
 
@@ -70,7 +77,7 @@ The easiest way to do this is the included `savefile` program. Press `CTRL-C` to
 ```
 cd ./filestore
 
-go run ./savefile ./ping.wasm /dev/ttyACM0
+go run ./savefile ./modules/ping.wasm /dev/ttyACM0
 ```
 
 Now connect again to the board, and now you should see the file listed using the `ls` command:
@@ -93,21 +100,15 @@ You can now load the module:
 
 ```
 ==> load ping.wasm
-load: ping.wasm
-module loaded
+loading ping.wasm
+module loaded.
 ```
 
 And then start it running:
 
 ```
 ==> run
-starting...
-building index space
-initializing memory
-initializing functions
-initializing globals
-running start func
-running.
+module running.
 ```
 
 Use the `ping` command:
