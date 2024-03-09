@@ -14,7 +14,7 @@ import (
 var wasmCode []byte
 
 func main() {
-	time.Sleep(1 * time.Second)
+	time.Sleep(2 * time.Second)
 
 	println("Mechanoid engine starting...")
 	eng := engine.NewEngine()
