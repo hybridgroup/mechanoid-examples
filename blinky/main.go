@@ -11,31 +11,24 @@ import (
 )
 
 //go:embed modules/blink.wasm
-var wasmModule []byte
+var wasmCode []byte
 
 func main() {
 	time.Sleep(3 * time.Second)
 
 	println("Mechanoid engine starting...")
 	eng := engine.NewEngine()
-
-	intp := interp.NewInterpreter()
-	println("Using interpreter", intp.Name())
-	eng.UseInterpreter(intp)
-
+	eng.UseInterpreter(interp.NewInterpreter())
 	eng.AddDevice(hardware.GPIO{})
 
-	println("Initializing engine...")
-	eng.Init()
-
-	println("Loading module...")
-	if err := eng.Interpreter.Load(bytes.NewReader(wasmModule)); err != nil {
+	println("Initializing engine using interpreter", eng.Interpreter.Name())
+	if err := eng.Init(); err != nil {
 		println(err.Error())
 		return
 	}
 
-	println("Running module...")
-	ins, err := eng.Interpreter.Run()
+	println("Loading and running WASM code...")
+	ins, err := eng.LoadAndRun(bytes.NewReader(wasmCode))
 	if err != nil {
 		println(err.Error())
 		return

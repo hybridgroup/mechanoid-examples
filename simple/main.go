@@ -11,21 +11,17 @@ import (
 )
 
 //go:embed modules/ping.wasm
-var pingModule []byte
+var wasmCode []byte
 
 func main() {
 	time.Sleep(1 * time.Second)
 
 	println("Mechanoid engine starting...")
 	eng := engine.NewEngine()
+	eng.UseInterpreter(interp.NewInterpreter())
 
-	intp := interp.NewInterpreter()
-	println("Using interpreter", intp.Name())
-	eng.UseInterpreter(intp)
-
-	println("Initializing engine...")
-	err := eng.Init()
-	if err != nil {
+	println("Initializing engine using interpreter", eng.Interpreter.Name())
+	if err := eng.Init(); err != nil {
 		println(err.Error())
 		return
 	}
@@ -41,14 +37,8 @@ func main() {
 		return
 	}
 
-	println("Loading WASM module...")
-	if err := eng.Interpreter.Load(bytes.NewReader(pingModule)); err != nil {
-		println(err.Error())
-		return
-	}
-
-	println("Running module...")
-	ins, err := eng.Interpreter.Run()
+	println("Loading and running WASM code...")
+	ins, err := eng.LoadAndRun(bytes.NewReader(wasmCode))
 	if err != nil {
 		println(err.Error())
 		return
@@ -56,7 +46,9 @@ func main() {
 
 	for {
 		println("Calling ping...")
-		_, _ = ins.Call("ping")
+		if _, err := ins.Call("ping"); err != nil {
+			println(err.Error())
+		}
 
 		time.Sleep(1 * time.Second)
 	}

@@ -13,7 +13,7 @@ import (
 )
 
 //go:embed modules/ping.wasm
-var wasmModule []byte
+var wasmCode []byte
 
 var (
 	eng *engine.Engine
@@ -28,29 +28,21 @@ func main() {
 
 // run func is the main entry point for the program.
 func run[T pixel.Color](disp board.Displayer[T]) {
-	time.Sleep(1 * time.Second)
+	time.Sleep(2 * time.Second)
 
 	println("Mechanoid engine starting...")
-	eng = engine.NewEngine()
-
-	println("Adding display device...")
+	eng := engine.NewEngine()
+	eng.UseInterpreter(interp.NewInterpreter())
 	eng.AddDevice(display.NewDevice(disp))
 
-	intp := interp.NewInterpreter()
-	println("Using interpreter", intp.Name())
-	eng.UseInterpreter(intp)
-
-	println("Initializing engine...")
-	eng.Init()
-
-	println("Loading WASM module...")
-	if err := eng.Interpreter.Load(bytes.NewReader(wasmModule)); err != nil {
+	println("Initializing engine using interpreter", eng.Interpreter.Name())
+	if err := eng.Init(); err != nil {
 		println(err.Error())
 		return
 	}
 
-	println("Running module...")
-	ins, err := eng.Interpreter.Run()
+	println("Loading and running WASM code...")
+	ins, err := eng.LoadAndRun(bytes.NewReader(wasmCode))
 	if err != nil {
 		println(err.Error())
 		return
