@@ -1,7 +1,6 @@
 # WASMBadge
 
-![1000004208](https://github.com/hybridgroup/mechanoid-examples/assets/5520/26809a01-ddcc-4bf2-a853-49a57fbddece)
-
+![WASMBadge](../images/wasmbadge-pybadge.jpg)
 
 This application is a conference badge programmed using WASM.
 

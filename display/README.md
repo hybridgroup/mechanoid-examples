@@ -1,5 +1,7 @@
 # Display
 
+![Display](../images/display-pybadge.jpg)
+
 Application that loads an embedded WASM program and displays the interaction on the small screen on the hardware device.
 
 ## How it works

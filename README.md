@@ -8,9 +8,13 @@ See the README files inside each for details on what they do and how they work.
 
 ## Blinky
 
+![Blinky](./images/blinky-pybadge.jpg)
+
 Application that loads an embedded WASM program that blinks an LED on the hardware.
 
 ## Display
+
+![Display](./images/display-pybadge.jpg)
 
 Application that loads an embedded WASM program and displays the interaction on the small screen on the hardware device.
 
@@ -28,8 +32,12 @@ Example of a simple "ping" application built using Mechanoid.
 
 ## Thumby
 
+![Thumby](./images/thumby.jpg)
+
 This is an example of an application built using Mechanoid specifically for the Thumby "itty-bitty game system". 
 
 ## WASMBadge
+
+![WASMBadge](./images/wasmbadge-pybadge.jpg)
 
 This application is a conference badge programmed using WASM.

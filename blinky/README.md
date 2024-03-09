@@ -1,4 +1,6 @@
-# Blink
+# Blinky
+
+![Blinky](../images/blinky-pybadge.jpg)
 
 Application that loads an embedded WASM program that blinks an LED on the hardware.
 
