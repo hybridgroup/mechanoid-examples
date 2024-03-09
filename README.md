@@ -12,6 +12,12 @@ See the README files inside each for details on what they do and how they work.
 
 Application that loads an embedded WASM program that blinks an LED on the hardware.
 
+## Buttons
+
+![Buttons](./images/buttons-gopher-badge.jpg)
+
+Application that loads an embedded WASM program and sends it events from pressing the buttons. The WASM programs then displays messages on the small screen on the hardware device.
+
 ## Display
 
 ![Display](./images/display-pybadge.jpg)
