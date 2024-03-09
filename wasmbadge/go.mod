@@ -7,7 +7,7 @@ replace github.com/tetratelabs/wazero => github.com/orsinium-forks/wazero v0.0.0
 require (
 	github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def
 	github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182
-	github.com/hybridgroup/mechanoid v0.0.0-20240309101400-ad81b2dd8832
+	github.com/hybridgroup/mechanoid v0.0.0-20240309111213-758ddcc58e7a
 	github.com/orsinium-labs/wypes v0.1.4
 	tinygo.org/x/drivers v0.26.1-0.20231124130000-fef6564044f9
 )
