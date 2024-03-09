@@ -18,17 +18,11 @@ func main() {
 
 	println("Mechanoid engine starting...")
 	eng = engine.NewEngine()
-
-	intp := interp.NewInterpreter()
-	println("Using interpreter", intp.Name())
-	eng.UseInterpreter(intp)
-
-	println("Use file store...")
+	eng.UseInterpreter(interp.NewInterpreter())
 	eng.UseFileStore(fs)
 
-	println("Initializing engine...")
-	err := eng.Init()
-	if err != nil {
+	println("Initializing engine using interpreter", eng.Interpreter.Name())
+	if err := eng.Init(); err != nil {
 		println(err.Error())
 		return
 	}

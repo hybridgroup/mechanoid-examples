@@ -125,6 +125,11 @@ type cmdfunc func(argv []string)
 func noop(argv []string) {}
 
 func ls(argv []string) {
+	if eng.FileStore == nil {
+		println("no file store available")
+		return
+	}
+
 	list, err := eng.FileStore.List()
 	if err != nil {
 		println("error listing files:", err.Error())
@@ -161,6 +166,11 @@ func lsblk(argv []string) {
 
 // load module into engine
 func load(argv []string) {
+	if eng.FileStore == nil {
+		println("no file store available")
+		return
+	}
+
 	if len(argv) != 2 {
 		println("usage: save <name>")
 		return
@@ -194,6 +204,11 @@ func load(argv []string) {
 
 // save into filestore
 func save(argv []string) {
+	if eng.FileStore == nil {
+		println("no file store available")
+		return
+	}
+
 	if len(argv) != 3 {
 		println("usage: save <name> <size>")
 		return
@@ -227,6 +242,11 @@ func readDataFromPort(data []byte) (err error) {
 
 // remove from filestore
 func rm(argv []string) {
+	if eng.FileStore == nil {
+		println("no file store available")
+		return
+	}
+
 	if len(argv) != 2 {
 		println("usage: rm <name>")
 		return
@@ -246,6 +266,11 @@ var (
 )
 
 func run(argv []string) {
+	if eng.FileStore == nil {
+		println("no file store available")
+		return
+	}
+
 	if running {
 		println("module already running. run 'halt' first.")
 		return
@@ -278,6 +303,11 @@ func halt(argv []string) {
 }
 
 func ping(argv []string) {
+	if eng.FileStore == nil {
+		println("no file store available")
+		return
+	}
+
 	if !running {
 		println("module not running. use 'run' first.")
 		return
@@ -299,6 +329,11 @@ func ping(argv []string) {
 }
 
 func hello(argv []string) {
+	if eng.FileStore == nil {
+		println("no file store available")
+		return
+	}
+
 	if !running {
 		println("module not running. use 'run' first.")
 		return

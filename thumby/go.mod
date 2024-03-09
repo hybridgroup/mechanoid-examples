@@ -5,7 +5,7 @@ go 1.22.0
 replace github.com/tetratelabs/wazero => github.com/orsinium-forks/wazero v0.0.0-20240305131633-28fdf656fe85
 
 require (
-	github.com/hybridgroup/mechanoid v0.0.0-20240308181405-d50c59a7f88a
+	github.com/hybridgroup/mechanoid v0.0.0-20240309101400-ad81b2dd8832
 	github.com/orsinium-labs/wypes v0.1.4
 	tinygo.org/x/drivers v0.27.0
 	tinygo.org/x/tinyfont v0.4.0

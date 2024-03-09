@@ -41,10 +41,7 @@ func run[T pixel.Color](disp board.Displayer[T]) {
 
 	println("Mechanoid engine starting...")
 	eng = engine.NewEngine()
-
-	intp := interp.NewInterpreter()
-	println("Using interpreter", intp.Name())
-	eng.UseInterpreter(intp)
+	eng.UseInterpreter(interp.NewInterpreter())
 
 	d := display.NewDevice[T](disp)
 	d.Init()
@@ -56,8 +53,11 @@ func run[T pixel.Color](disp board.Displayer[T]) {
 	// host interface to badge API
 	eng.AddDevice(bg)
 
-	println("Initializing engine...")
-	eng.Init()
+	println("Initializing engine using interpreter", eng.Interpreter.Name())
+	if err := eng.Init(); err != nil {
+		println(err.Error())
+		return
+	}
 
 	mechanoid.DebugMemory("after engine init")
 
