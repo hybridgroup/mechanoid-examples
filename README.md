@@ -47,3 +47,9 @@ This is an example of an application built using Mechanoid specifically for the 
 ![WASMBadge](./images/wasmbadge-pybadge.jpg)
 
 This application is a conference badge programmed using WASM.
+
+## WASMDrone
+
+![WASMDrone](./images/wasmdrone-pybadge-tello.jpg)
+
+This application lets you write a WebAssembly program that runs on a hardware device with connected wireless to fly a DJI Tello drone.
