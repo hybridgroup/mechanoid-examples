@@ -57,6 +57,14 @@ func run[T pixel.Color](disp board.Displayer[T]) {
 			continue
 		}
 		switch event.Key() {
+		case board.KeyA:
+			if _, err := ins.Call("button_a"); err != nil {
+				println(err.Error())
+			}
+		case board.KeyB:
+			if _, err := ins.Call("button_b"); err != nil {
+				println(err.Error())
+			}
 		case board.KeyUp:
 			if _, err := ins.Call("button_up"); err != nil {
 				println(err.Error())
@@ -73,8 +81,14 @@ func run[T pixel.Color](disp board.Displayer[T]) {
 			if _, err := ins.Call("button_right"); err != nil {
 				println(err.Error())
 			}
-		case board.KeyEnter, board.KeyA:
-			// send it
+		case board.KeySelect, board.KeyEscape:
+			if _, err := ins.Call("button_select"); err != nil {
+				println(err.Error())
+			}
+		case board.KeyStart, board.KeyEnter:
+			if _, err := ins.Call("button_start"); err != nil {
+				println(err.Error())
+			}
 		}
 
 		time.Sleep(time.Second / 30)
