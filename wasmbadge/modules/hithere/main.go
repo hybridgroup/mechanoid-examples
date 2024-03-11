@@ -9,35 +9,32 @@ import (
 const msg = "Hello, WebAssembly!"
 
 var (
-	bgtext  *BigText
 	counter int
 	buf     [64]byte
 )
 
 //go:export start
 func start() {
-	bgtext = NewBigText(msg)
+	copy(buf[:], msg)
+	ptr, sz := convert.BytesToWasmPtr(buf[:len(msg)])
+
+	badge_set_text1(ptr, sz)
 }
 
 //go:export update
 func update() {
-	start, end := 0, len(msg)
-	copy(buf[:], msg)
-	bgtext.SetText1(buf[start:end])
-
 	m := "Count: "
-	start, end = end, end+len(m)
+	start, end := 0, len(m)
 	copy(buf[start:end], m)
 
 	counter++
 	s := convert.IntToString(counter)
-	st2 := end
+	start = end
 	end = end + len(s)
 
-	copy(buf[st2:end], s)
-	bgtext.SetText2(buf[start:end])
-
-	bgtext.Show()
+	copy(buf[start:end], s)
+	ptr, sz := convert.BytesToWasmPtr(buf[0:end])
+	badge_set_text2(ptr, sz)
 }
 
 func main() {}

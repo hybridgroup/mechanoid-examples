@@ -6,20 +6,19 @@ import (
 	"github.com/hybridgroup/mechanoid/convert"
 )
 
-//go:wasmimport badge new_big_text
-func new_big_text(ptr, sz uint32) uint32
-
-const msg = "TinyGo"
+const msg = "This badge runs WebAssembly!"
+const msg2 = "Mechanoid + TinyGo"
 
 //go:export start
 func start() {
 	ptr, sz := convert.StringToWasmPtr(msg)
-	new_big_text(ptr, sz)
+	badge_set_text1(ptr, sz)
 }
 
 //go:export update
 func update() {
-	// TODO: something with the ui
+	ptr, sz := convert.StringToWasmPtr(msg2)
+	badge_set_text2(ptr, sz)
 }
 
 func main() {}

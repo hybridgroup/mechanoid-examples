@@ -43,15 +43,13 @@ func run[T pixel.Color](disp board.Displayer[T]) {
 	eng = engine.NewEngine()
 	eng.UseInterpreter(interp.NewInterpreter())
 
+	// host interface to display API
 	d := display.NewDevice[T](disp)
-	d.Init()
-
-	// badge interface to display API
-	bg := badge.NewDevice[T]()
-	bg.UseDisplay(&d)
+	eng.AddDevice(&d)
 
 	// host interface to badge API
-	eng.AddDevice(bg)
+	b := badge.NewDevice[T](&d)
+	eng.AddDevice(b)
 
 	println("Initializing engine using interpreter", eng.Interpreter.Name())
 	if err := eng.Init(); err != nil {
@@ -88,20 +86,21 @@ func run[T pixel.Color](disp board.Displayer[T]) {
 				index = 0
 			}
 			listbox.Select(index)
-		case board.KeyEnter, board.KeyA:
+		case board.KeyA:
 			home = nil
-			runWASM(menuChoices[listbox.Selected()], &d)
+			runWASM(menuChoices[listbox.Selected()], &d, b)
 
 			mechanoid.DebugMemory("after runWASM exit")
-
-			bg.Cleanup()
 			runtime.GC()
-
 			mechanoid.DebugMemory("after runWASM exit GC")
 
 			home = createHome[T](&d)
 			home.Show(&d)
 			listbox = home.ListBox
+		case board.KeyStart, board.KeyEnter:
+			// rotation
+			home = nil
+			runWASMRotation(&d, b)
 		}
 
 		d.Screen.Update()

@@ -8,96 +8,70 @@ import (
 
 type Badge[T pixel.Color] struct {
 	Display *display.Device[T]
-	bt      wypes.HostRef[*BigText[T]]
+	bt      *BigText[T]
 }
 
-func NewDevice[T pixel.Color]() *Badge[T] {
-	return &Badge[T]{}
+func NewDevice[T pixel.Color](d *display.Device[T]) *Badge[T] {
+	return &Badge[T]{
+		Display: d,
+	}
 }
 
 func (b *Badge[T]) Init() error {
+	b.bt = NewBigText[T](b.Display)
+	b.bt.Show(b.Display)
+
 	return nil
 }
 
 func (b *Badge[T]) Modules() wypes.Modules {
 	return wypes.Modules{
 		"badge": wypes.Module{
-			"new_big_text": wypes.H1(b.newBigText),
-		},
-		"bigtext": wypes.Module{
-			"set_text1": wypes.H2(b.bigTextSetText1),
-			"set_text2": wypes.H2(b.bigTextSetText2),
-			"show":      wypes.H1(b.bigTextShow),
+			"heading":   wypes.H1(b.bigTextHeading),
+			"set_text1": wypes.H1(b.bigTextSetText1),
+			"set_text2": wypes.H1(b.bigTextSetText2),
 		},
 	}
 }
 
-func (b *Badge[T]) UseDisplay(d *display.Device[T]) error {
-	b.Display = d
+func (b *Badge[T]) Clear() error {
+	b.bt.Heading("")
+	b.bt.SetText1("")
+	b.bt.SetText2("")
+	b.bt.Show(b.Display)
+
 	return nil
 }
 
-func (b *Badge[T]) Cleanup() error {
-	if b.bt.Raw != nil {
-		b.bt.Drop()
-	}
-	return nil
+func (b *Badge[T]) bigTextHeading(msg wypes.String) wypes.Void {
+	b.Heading(msg.Unwrap())
+
+	return wypes.Void{}
 }
 
-func (b *Badge[T]) newBigText(msg wypes.String) wypes.HostRef[*BigText[T]] {
-	// create the badge UI element
-	bt := NewBigText[T](b.Display, "WASM Badge", msg.Unwrap(), "")
-	if bt == nil {
-		return wypes.HostRef[*BigText[T]]{Raw: nil}
-	}
-	bt.Show(b.Display)
-	ref := wypes.HostRef[*BigText[T]]{Raw: bt}
-	b.bt = ref
+func (b *Badge[T]) bigTextSetText1(msg wypes.String) wypes.Void {
+	b.SetText1(msg.Unwrap())
 
-	return ref
+	return wypes.Void{}
 }
 
-func (b *Badge[T]) bigTextSetText1(ref wypes.HostRef[*BigText[T]], msg wypes.String) wypes.UInt32 {
-	// get the badge UI element by reference
-	bt := ref.Unwrap()
-	if bt == nil {
-		if b.bt.Raw == nil {
-			println("bigTextSetText1: ref is nil")
-			return 0
-		}
-		bt = b.bt.Unwrap()
-	}
-	bt.SetText1(msg.Unwrap())
-	return wypes.UInt32(len(msg.Unwrap()))
+func (b *Badge[T]) bigTextSetText2(msg wypes.String) wypes.Void {
+	b.SetText2(msg.Unwrap())
+
+	return wypes.Void{}
 }
 
-func (b *Badge[T]) bigTextSetText2(ref wypes.HostRef[*BigText[T]], msg wypes.String) wypes.UInt32 {
-	// get the badge UI element by reference
-	bt := ref.Unwrap()
-	if bt == nil {
-		if b.bt.Raw == nil {
-			println("bigTextSetText2: ref is nil")
-			return 0
-		}
-		bt = b.bt.Unwrap()
-	}
-
-	bt.SetText2(msg.Unwrap())
-	return wypes.UInt32(len(msg.Unwrap()))
+func (b *Badge[T]) Heading(msg string) {
+	b.bt.Heading(msg)
+	b.bt.Show(b.Display)
 }
 
-func (b *Badge[T]) bigTextShow(ref wypes.HostRef[*BigText[T]]) wypes.UInt32 {
-	// get the badge UI element by reference
-	bt := ref.Unwrap()
-	if bt == nil {
-		if b.bt.Raw == nil {
-			println("bigTextShow: ref is nil")
-			return 0
-		}
-		bt = b.bt.Unwrap()
-	}
+func (b *Badge[T]) SetText1(msg string) {
+	b.bt.SetText1(msg)
+	b.bt.Show(b.Display)
+}
 
-	bt.Show(b.Display)
-
-	return 1
+func (b *Badge[T]) SetText2(msg string) {
+	b.bt.SetText2(msg)
+	b.bt.Show(b.Display)
 }
