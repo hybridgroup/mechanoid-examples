@@ -4,7 +4,8 @@
 
 This repo contains example applications written using Mechanoid (https://mechanoid.io)
 
-See the README files inside each for details on what they do and how they work.
+See the README files inside each for details on what they do, how they work and the **recommended runtime interpreter** (wazero, wasman,...), as there are some differences among them and the example might not run 
+properly. 
 
 ## Blinky
 
