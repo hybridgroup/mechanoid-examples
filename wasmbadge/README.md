@@ -14,27 +14,60 @@ When the application runs, it presents a list of all of the different programs o
 
 Use the buttons to choose one of the programs, and then press the "A" button to run it.
 
-If you want to cycle thru the entire list, press the "START" button. The badge will run each of the WASM programs for 10 seconds before switching to the next one.
+If you want to cycle thru the entire list, press either the "START" button or the "B" button. The badge will run each of the WASM programs for 10 seconds before switching to the next one.
 
-To get back to the home screen, press the "SELECT" button.
+To get back to the home screen, press either the "SELECT" button or the "B" button.
 
 ## How to run
 
 ### PyBadge
 
 ```
-$ mecha flash -i wasman pybadge
+$ mecha flash -i wasman pybadge                                                     
+Building module hithere                                                               
+Done.                                                                                 
+   code    data     bss |   flash     ram
+    461      31    4097 |     492    4128                                             
+Building module mynameis                                                              
+Done.                                                                                 
+   code    data     bss |   flash     ram                                             
+     93      32    4096 |     125    4128                                             
+Building module thisbadge                                                             
+Done.                                                                                 
+   code    data     bss |   flash     ram                                             
+     31      45    4096 |      76    4141
+Building module youarehere    
+Done.                                
+   code    data     bss |   flash     ram
+     24      18    4096 |      42    4114
+Application built. Now flashing...                                                    
+   code    data     bss |   flash     ram
+ 132300    1748    6792 |  134048    8540
+```
+
+### Gopher Badge
+
+```
+$ mecha flash -i wasman gopher-badge
 Building module hithere
 Done.
    code    data     bss |   flash     ram
-    576      31    4097 |     607    4128
+    461      31    4097 |     492    4128
 Building module mynameis
 Done.
    code    data     bss |   flash     ram
-     15       6    4096 |      21    4102
+     93      32    4096 |     125    4128
+Building module thisbadge
+Done.
+   code    data     bss |   flash     ram
+     31      45    4096 |      76    4141
+Building module youarehere
+Done.
+   code    data     bss |   flash     ram
+     24      18    4096 |      42    4114
 Application built. Now flashing...
    code    data     bss |   flash     ram
- 131380    1740    6792 |  133120    8532
+ 142728    1752    3316 |  144480    5068
 ```
 
 ### Simulator

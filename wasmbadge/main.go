@@ -97,7 +97,7 @@ func run[T pixel.Color](disp board.Displayer[T]) {
 			home = createHome[T](&d)
 			home.Show(&d)
 			listbox = home.ListBox
-		case board.KeyStart, board.KeyEnter:
+		case board.KeyStart, board.KeyEnter, board.KeyB:
 			// rotation
 			home = nil
 			runWASMRotation(&d, b)

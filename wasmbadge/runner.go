@@ -57,7 +57,7 @@ func runWASM[T pixel.Color](module string, d *display.Device[T], b *badge.Badge[
 			continue
 		}
 		switch event.Key() {
-		case board.KeySelect, board.KeyEscape:
+		case board.KeySelect, board.KeyEscape, board.KeyB:
 			return nil
 		}
 
@@ -136,7 +136,7 @@ func runWASMRotation[T pixel.Color](d *display.Device[T], b *badge.Badge[T]) err
 				continue
 			}
 			switch event.Key() {
-			case board.KeySelect, board.KeyEscape:
+			case board.KeySelect, board.KeyEscape, board.KeyB:
 				// return home
 				return nil
 			case board.KeyA:
