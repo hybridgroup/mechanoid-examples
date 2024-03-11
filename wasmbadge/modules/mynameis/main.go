@@ -6,19 +6,28 @@ import (
 	"github.com/hybridgroup/mechanoid/convert"
 )
 
-const msg = "This badge runs WebAssembly!"
-const msg2 = "Mechanoid + TinyGo"
+const name = "@mechanoidio"
+const description = "WebAssembly"
+const description2 = "on TinyGo"
+const nada = ""
+
+var (
+	// buf is a buffer that is used to pass messages to the greeter host instance.
+	buf [64]byte
+)
 
 //go:export start
 func start() {
-	ptr, sz := convert.StringToWasmPtr(msg)
-	badge_set_text1(ptr, sz)
+	badge_set_text1(convert.StringToWasmPtr(name))
 }
 
 //go:export update
 func update() {
-	ptr, sz := convert.StringToWasmPtr(msg2)
-	badge_set_text2(ptr, sz)
+	copy(buf[:], description)
+	badge_set_text3(convert.BytesToWasmPtr(buf[:len(description)]))
+
+	copy(buf[len(description)+1:], description2)
+	badge_set_text4(convert.BytesToWasmPtr(buf[len(description)+1 : len(description)+len(description2)+1]))
 }
 
 func main() {}

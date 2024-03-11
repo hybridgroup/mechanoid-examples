@@ -101,6 +101,14 @@ func run[T pixel.Color](disp board.Displayer[T]) {
 			// rotation
 			home = nil
 			runWASMRotation(&d, b)
+
+			mechanoid.DebugMemory("after runWASM exit")
+			runtime.GC()
+			mechanoid.DebugMemory("after runWASM exit GC")
+
+			home = createHome[T](&d)
+			home.Show(&d)
+			listbox = home.ListBox
 		}
 
 		d.Screen.Update()

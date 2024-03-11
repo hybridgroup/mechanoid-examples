@@ -30,6 +30,8 @@ func (b *Badge[T]) Modules() wypes.Modules {
 			"heading":   wypes.H1(b.bigTextHeading),
 			"set_text1": wypes.H1(b.bigTextSetText1),
 			"set_text2": wypes.H1(b.bigTextSetText2),
+			"set_text3": wypes.H1(b.bigTextSetText3),
+			"set_text4": wypes.H1(b.bigTextSetText4),
 		},
 	}
 }
@@ -38,6 +40,8 @@ func (b *Badge[T]) Clear() error {
 	b.bt.Heading("")
 	b.bt.SetText1("")
 	b.bt.SetText2("")
+	b.bt.SetText3("")
+	b.bt.SetText4("")
 	b.bt.Show(b.Display)
 
 	return nil
@@ -61,17 +65,44 @@ func (b *Badge[T]) bigTextSetText2(msg wypes.String) wypes.Void {
 	return wypes.Void{}
 }
 
+func (b *Badge[T]) bigTextSetText3(msg wypes.String) wypes.Void {
+	b.SetText3(msg.Unwrap())
+
+	return wypes.Void{}
+}
+
+func (b *Badge[T]) bigTextSetText4(msg wypes.String) wypes.Void {
+	b.SetText4(msg.Unwrap())
+
+	return wypes.Void{}
+}
+
 func (b *Badge[T]) Heading(msg string) {
 	b.bt.Heading(msg)
 	b.bt.Show(b.Display)
+	b.Display.Screen.Update()
 }
 
 func (b *Badge[T]) SetText1(msg string) {
 	b.bt.SetText1(msg)
 	b.bt.Show(b.Display)
+	b.Display.Screen.Update()
 }
 
 func (b *Badge[T]) SetText2(msg string) {
 	b.bt.SetText2(msg)
 	b.bt.Show(b.Display)
+	b.Display.Screen.Update()
+}
+
+func (b *Badge[T]) SetText3(msg string) {
+	b.bt.SetText3(msg)
+	b.bt.Show(b.Display)
+	b.Display.Screen.Update()
+}
+
+func (b *Badge[T]) SetText4(msg string) {
+	b.bt.SetText4(msg)
+	b.bt.Show(b.Display)
+	b.Display.Screen.Update()
 }

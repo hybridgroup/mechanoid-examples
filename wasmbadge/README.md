@@ -8,7 +8,15 @@ This application is a conference badge programmed using WASM.
 
 The application can connect to any of the display supported in the `boards` package.
 
-It then loads the `ping.wasm` program which is embedded into the application itself.
+It embeds all of the WASM files in the `modules` directory right into the application itself.
+
+When the application runs, it presents a list of all of the different programs on the display.
+
+Use the buttons to choose one of the programs, and then press the "A" button to run it.
+
+If you want to cycle thru the entire list, press the "START" button. The badge will run each of the WASM programs for 10 seconds before switching to the next one.
+
+To get back to the home screen, press the "SELECT" button.
 
 ## How to run
 

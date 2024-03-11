@@ -13,6 +13,8 @@ type BigText[T pixel.Color] struct {
 	Header   *tinygl.Text[T]
 	TextBox1 *tinygl.Text[T]
 	TextBox2 *tinygl.Text[T]
+	TextBox3 *tinygl.Text[T]
+	TextBox4 *tinygl.Text[T]
 }
 
 // createWasmPage creates the screen when executing wasm on the badge.
@@ -29,8 +31,12 @@ func NewBigText[T pixel.Color](d *display.Device[T]) *BigText[T] {
 	textbox1.SetAlign(tinygl.AlignCenter)
 	textbox2 := d.Theme.NewText("")
 	textbox2.SetAlign(tinygl.AlignCenter)
+	textbox3 := d.Theme.NewText("")
+	textbox3.SetAlign(tinygl.AlignCenter)
+	textbox4 := d.Theme.NewText("")
+	textbox4.SetAlign(tinygl.AlignCenter)
 
-	vbox := d.Theme.NewVBox(header, textbox1, textbox2)
+	vbox := d.Theme.NewVBox(header, textbox1, textbox2, textbox3, textbox4)
 
 	return &BigText[T]{
 		Name:     "BigText",
@@ -38,6 +44,8 @@ func NewBigText[T pixel.Color](d *display.Device[T]) *BigText[T] {
 		Header:   header,
 		TextBox1: textbox1,
 		TextBox2: textbox2,
+		TextBox3: textbox3,
+		TextBox4: textbox4,
 	}
 }
 
@@ -56,4 +64,12 @@ func (bt *BigText[T]) SetText1(s string) {
 
 func (bt *BigText[T]) SetText2(s string) {
 	bt.TextBox2.SetText(s)
+}
+
+func (bt *BigText[T]) SetText3(s string) {
+	bt.TextBox3.SetText(s)
+}
+
+func (bt *BigText[T]) SetText4(s string) {
+	bt.TextBox4.SetText(s)
 }
