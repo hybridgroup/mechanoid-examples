@@ -35,7 +35,7 @@ Calling loop...
 ### gopher-badge
 
 ```
-$ mecha flash -m pybadge
+$ mecha flash -m gopher-badge
    code    data     bss |   flash     ram
  103748    2316    6680 |  106064    8996
 Connected to /dev/ttyACM0. Press Ctrl-C to exit.
