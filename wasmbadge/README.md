@@ -22,33 +22,8 @@ To get back to the home screen, press either the "SELECT" button or the "B" butt
 
 ### PyBadge
 
-```
-$ mecha flash -i wasman pybadge                                                     
-Building module hithere                                                               
-Done.                                                                                 
-   code    data     bss |   flash     ram
-    461      31    4097 |     492    4128                                             
-Building module mynameis                                                              
-Done.                                                                                 
-   code    data     bss |   flash     ram                                             
-     93      32    4096 |     125    4128                                             
-Building module thisbadge                                                             
-Done.                                                                                 
-   code    data     bss |   flash     ram                                             
-     31      45    4096 |      76    4141
-Building module youarehere    
-Done.                                
-   code    data     bss |   flash     ram
-     24      18    4096 |      42    4114
-Application built. Now flashing...                                                    
-   code    data     bss |   flash     ram
- 132300    1748    6792 |  134048    8540
-```
-
-### Gopher Badge
-
-```
-$ mecha flash -i wasman gopher-badge
+```bash
+$ mecha flash -i wasman pybadge
 Building module hithere
 Done.
    code    data     bss |   flash     ram
@@ -57,6 +32,10 @@ Building module mynameis
 Done.
    code    data     bss |   flash     ram
      93      32    4096 |     125    4128
+Building module mythingis
+Done.
+   code    data     bss |   flash     ram
+     38      62    4096 |     100    4158
 Building module thisbadge
 Done.
    code    data     bss |   flash     ram
@@ -67,7 +46,36 @@ Done.
      24      18    4096 |      42    4114
 Application built. Now flashing...
    code    data     bss |   flash     ram
- 142728    1752    3316 |  144480    5068
+ 133032    1748    6792 |  134780    8540
+```
+
+### Gopher Badge
+
+```bash
+$ mecha flash -i wasman gopher-badge
+Building module hithere
+Done.
+   code    data     bss |   flash     ram
+    461      31    4097 |     492    4128
+Building module mynameis
+Done.
+   code    data     bss |   flash     ram
+     93      32    4096 |     125    4128
+Building module mythingis
+Done.
+   code    data     bss |   flash     ram
+     38      62    4096 |     100    4158
+Building module thisbadge
+Done.
+   code    data     bss |   flash     ram
+     31      45    4096 |      76    4141
+Building module youarehere
+Done.
+   code    data     bss |   flash     ram
+     24      18    4096 |      42    4114
+Application built. Now flashing...
+   code    data     bss |   flash     ram
+ 143444    1752    3316 |  145196    5068
 ```
 
 ### Simulator
@@ -77,24 +85,31 @@ You need to install the Fyne cross-platform GUI toolkit to use the Mechanoid sim
 https://github.com/fyne-io/fyne
 
 
-```
-$ mecha run -i wasman                                                                                                                                                        
-Running using interpreter wasman                                                                                                                                             
-Mechanoid engine starting...                                                                                                                                                 
-Using interpreter wasman                                                                                                                                                     
-Initializing engine...                                                                                                                                                       
-Registering host modules...                                                                                                                                                  
-Running WASM module mynameis.wasm                                                                                                                                            
-Running module...                                                                                                                                                            
-Running WASM module hithere.wasm                                                                                                                                             
-Running module...                                                                                                                                                            
-Mechanoid engine starting...                                                                                                                                                 
-Using interpreter wasman                                                                                                                                                     
-Initializing engine...                                                                                                                                                       
-Registering host modules...                                                                                                                                                  
-Running WASM module mynameis.wasm                                                                                                                                            
-Running module...                                                                                                                                                            
-Running WASM module hithere.wasm
-Running module...
+```bash
+$ mecha run -i wasman
+Running using interpreter wasman
+Building module hithere
+Done.
+   code    data     bss |   flash     ram
+    461      31    4097 |     492    4128
+Building module mynameis
+Done.
+   code    data     bss |   flash     ram
+     93      32    4096 |     125    4128
+Building module mythingis
+Done.
+   code    data     bss |   flash     ram
+     38      55    4096 |      93    4151
+Building module thisbadge
+Done.
+   code    data     bss |   flash     ram
+     31      45    4096 |      76    4141
+Building module youarehere
+Done.
+   code    data     bss |   flash     ram
+     24      18    4096 |      42    4114
+Mechanoid engine starting...
+Initializing engine using interpreter wasman
+Registering host modules...
 ...
 ```

@@ -1,4 +1,4 @@
-# Hi There
+# My Thing Is
 
 Mechanoid WebAssembly module template.
 
