@@ -6,6 +6,40 @@ This application is a conference badge programmed using WASM.
 
 ## How it works
 
+```mermaid
+flowchart LR
+   subgraph Microcontroller
+      subgraph Application
+      end
+      subgraph Devices
+         subgraph Badge
+            Heading
+            SetText1
+            SetText2
+         end
+         subgraph Display
+            ShowMessage
+         end
+      end
+      subgraph Modules
+         subgraph hithere.wasm
+            Start1[Start]
+            Update1[Update]
+         end
+         subgraph mynameis.wasm
+            Start2[Start]
+            Update2[Update]
+         end
+      end
+      Application-->Start1
+      Application-->Update1
+      Heading-->ShowMessage
+      Start1-->Heading
+      Update1-->SetText1
+      Update1-->SetText2
+   end
+```
+
 The application can connect to any of the display supported in the `boards` package.
 
 It embeds all of the WASM files in the `modules` directory right into the application itself.

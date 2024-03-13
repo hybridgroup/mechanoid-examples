@@ -10,6 +10,30 @@ You need a PyBadge with an AirLift WiFi or similar device to run this example.
 
 The application has 2 devices: the Display device for showing status, and the Drone device for communicating to the connected DJI Tello drone.
 
+```mermaid
+flowchart LR
+    subgraph Microcontroller
+        subgraph Application
+        end
+        subgraph Devices
+            subgraph Drone
+            end
+            subgraph Display
+            end
+        end
+        subgraph Modules
+            subgraph drone.wasm
+            end
+        end
+        Application--Buttons-->drone.wasm
+        drone.wasm--Commands-->Drone
+        drone.wasm-->Display
+    end
+    subgraph Tello
+    end
+    Drone--WiFi-->Tello
+```
+
 ## How to run
 
 ### PyBadge
