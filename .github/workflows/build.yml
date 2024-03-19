@@ -1,0 +1,56 @@
+name: Linux
+
+on:
+  pull_request:
+  push:
+    branches:
+      - dev
+      - release
+  workflow_dispatch:
+
+jobs:
+  smoketest:
+    strategy:
+      matrix:
+        project: [
+            'blinky',
+            'buttons',
+            'display',
+            'externref',
+            'filestore',
+            'simple',
+            'thumby',
+            'wasmbadge',
+            'wasmdrone']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - uses: acifani/setup-tinygo@v2
+        with:
+          tinygo-version: '0.31.2'
+      - name: TinyGo version check
+        run: tinygo version
+      - name: Install gonew
+        run: go install golang.org/x/tools/cmd/gonew@latest
+      - name: Install Mechanoid CLI
+        run: go install github.com/hybridgroup/mechanoid/cmd/mecha@latest
+      - name: Mechanoid version check
+        run: mecha -v
+      - name: Build project modules
+        run: mecha build
+        working-directory: ${{ matrix.project }}
+      - name: Default target for smoke test
+        run: |
+            echo "BUILD_TARGET=pybadge" >> $GITHUB_ENV
+      - name: Handle additional target for smoke test
+        run: |
+            echo "BUILD_TARGET=thumby" >> $GITHUB_ENV
+        if: ${{ matrix.project == 'thumby' }}
+      - name: Build project binary
+        run: tinygo build -o ${{ matrix.project }}.uf2 -target ${{env.BUILD_TARGET}} .
+        working-directory: ${{ matrix.project }}
