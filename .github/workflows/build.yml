@@ -35,6 +35,12 @@ jobs:
           tinygo-version: '0.31.2'
       - name: TinyGo version check
         run: tinygo version
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - name: Rust version check
+        run: rustc --version
       - name: Install gonew
         run: go install golang.org/x/tools/cmd/gonew@latest
       - name: Install Mechanoid CLI
