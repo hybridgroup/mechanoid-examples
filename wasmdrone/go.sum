@@ -202,8 +202,6 @@ github.com/hashicorp/memberlist v0.1.3/go.mod h1:ajVTdAv/9Im8oMAAj5G31PhhMCZJV2p
 github.com/hashicorp/serf v0.8.2/go.mod h1:6hOLApaqBFA1NXqRQAsxw9QxuDEvNxSQRwA/JwenrHc=
 github.com/hybridgroup/mechanoid v0.0.0-20240309111213-758ddcc58e7a h1:7Hdaw1lCpdA85YlgwKk4L974C5k/gxQeEo3LSYsJWT0=
 github.com/hybridgroup/mechanoid v0.0.0-20240309111213-758ddcc58e7a/go.mod h1:goPLq6Qim+Hr7nGeDflbxPNqhErDAdhpUmFp44URbo8=
-github.com/hybridgroup/mechanoid-examples/buttons v0.0.0-20240310125129-64e802231425 h1:hNvw2iNBp5QU7CQgYIB6LoleeXOjKX+fXTpLv4530bQ=
-github.com/hybridgroup/mechanoid-examples/buttons v0.0.0-20240310125129-64e802231425/go.mod h1:KDcH3YkZZ8qjvKfLEzbcrC6Xd8RJ38ky/AcL+L0kfGs=
 github.com/hybridgroup/tinygo-tello v0.0.0-20240310133819-eb8919c64e88 h1:5TR/Z8dNr6jBNRraiegPtQrepSZpwcRx5LMrq9M4StE=
 github.com/hybridgroup/tinygo-tello v0.0.0-20240310133819-eb8919c64e88/go.mod h1:ypUglFzu5zhOgWBFzMQHE7D8L/+6ULhWDXG1PjWkXKE=
 github.com/hybridgroup/wasman v0.0.0-20240304140329-ce1ea6b61834 h1:pP916/7OLromi+7fHcbw5jIXOT/idiEBQ3ucbl8caz8=
@@ -248,8 +246,6 @@ github.com/neelance/sourcemap v0.0.0-20200213170602-2833bce08e4c/go.mod h1:Qr6/a
 github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646/go.mod h1:jpp1/29i3P1S/RLdc7JQKbRpFeM1dOBd8T9ki5s+AY8=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e h1:fD57ERR4JtEqsWbfPhv4DMiApHyliiK5xCTNVSPiaAs=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLANZcx1PVRCS0qkT7pwLkGfwJo4zjcN/Tysno=
-github.com/orsinium-forks/wazero v0.0.0-20240305131633-28fdf656fe85 h1:SEURwzbGfMFBbwCpcaDkkbZu7jUoPWT6fbJ3Zh+Ssow=
-github.com/orsinium-forks/wazero v0.0.0-20240305131633-28fdf656fe85/go.mod h1:0U0G41+ochRKoPKCJlh0jMg1CHkyfK8kDqiirMmKY8A=
 github.com/orsinium-labs/tinytest v1.0.0 h1:YiGm/whlGm3mn/ynx9CCFuvEa3Q6yEGrzrKXEqJOkdc=
 github.com/orsinium-labs/tinytest v1.0.0/go.mod h1:GwcYBp0aKi6zujzBXFpCnqw6RSLSp9JSedDyu/V1DF4=
 github.com/orsinium-labs/wypes v0.1.4 h1:+7oih2IDlEpz7laiL3sQFlIU8vjd5j/SwcYlPdIPc0Q=
@@ -297,6 +293,8 @@ github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.8.0 h1:pSgiaMZlXftHpm5L7V1+rVB+AZJydKsMxsQBIJw4PKk=
 github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
 github.com/subosito/gotenv v1.2.0/go.mod h1:N0PQaV/YGNqwC0u51sEeR/aUtSLEXKX9iv69rRypqCw=
+github.com/tetratelabs/wazero v1.7.1-0.20240401054209-4d6585d7da56 h1:sB7EW6YA2z8k4or+w8Tm2eo1wD/f4uQ31AffFfgRhvo=
+github.com/tetratelabs/wazero v1.7.1-0.20240401054209-4d6585d7da56/go.mod h1:ytl6Zuh20R/eROuyDaGPkp82O9C/DJfXAwJfQ3X6/7Y=
 github.com/tevino/abool v1.2.0 h1:heAkClL8H6w+mK5md9dzsuohKeXHUpY7Vw0ZCKW+huA=
 github.com/tevino/abool v1.2.0/go.mod h1:qc66Pna1RiIsPa7O4Egxxs9OqkuxDX55zznh9K07Tzg=
 github.com/urfave/cli/v2 v2.4.0/go.mod h1:NX9W0zmTvedE5oDoOMs2RTC8RvdK98NTYZE5LbaEYPg=
