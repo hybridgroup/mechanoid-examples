@@ -6,7 +6,6 @@ require (
 	github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def
 	github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182
 	github.com/hybridgroup/mechanoid v0.0.0-20240309111213-758ddcc58e7a
-	github.com/hybridgroup/mechanoid-examples/buttons v0.0.0-20240310125129-64e802231425
 	github.com/hybridgroup/tinygo-tello v0.0.0-20240310133819-eb8919c64e88
 	github.com/orsinium-labs/wypes v0.1.4
 	tinygo.org/x/drivers v0.27.0
@@ -34,7 +33,7 @@ require (
 	github.com/srwiley/oksvg v0.0.0-20220731023508-a61f04f16b76 // indirect
 	github.com/srwiley/rasterx v0.0.0-20210519020934-456a8d69b780 // indirect
 	github.com/stretchr/testify v1.8.0 // indirect
-	github.com/tetratelabs/wazero v1.6.0 // indirect
+	github.com/tetratelabs/wazero v1.7.1-0.20240401054209-4d6585d7da56 // indirect
 	github.com/tevino/abool v1.2.0 // indirect
 	github.com/yuin/goldmark v1.4.13 // indirect
 	golang.org/x/image v0.3.0 // indirect
@@ -45,5 +44,3 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	honnef.co/go/js/dom v0.0.0-20210725211120-f030747120f2 // indirect
 )
-
-replace github.com/tetratelabs/wazero => github.com/orsinium-forks/wazero v0.0.0-20240305131633-28fdf656fe85
