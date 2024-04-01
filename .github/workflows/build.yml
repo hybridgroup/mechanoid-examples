@@ -41,6 +41,12 @@ jobs:
           targets: wasm32-unknown-unknown
       - name: Rust version check
         run: rustc --version
+      - name: Setup Zig
+        uses: goto-bus-stop/setup-zig@v2
+        with:
+          version: 0.11.0
+      - name: Zig version check
+        run: zig version
       - name: Install gonew
         run: go install golang.org/x/tools/cmd/gonew@latest
       - name: Install Mechanoid CLI
