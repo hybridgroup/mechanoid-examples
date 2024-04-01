@@ -1,16 +1,9 @@
-# pingzig
+# PingZig
 
-WASM unknown module written in Zig
+Mechanoid module template in Zig that exports a `ping()` function, that immediately calls the host's `pong()` function.
 
-## How to install
+## Building
 
-- Install Zig.
-
-## How to build module
-
-```bash
-cd modules/pingzig
-zig build-lib -rdynamic -dynamic -target wasm32-freestanding -OReleaseSmall --stack 4096 --import-memory --initial-memory=65536 --max-memory=65536 ping.zig
-cd ../..
-cp ./modules/pingzig/ping.wasm ./modules/pingzig.wasm
+```
+mecha build
 ```
