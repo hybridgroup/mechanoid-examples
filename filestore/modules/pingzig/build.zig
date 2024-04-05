@@ -13,7 +13,6 @@ pub fn build(b: *std.Build) void {
     });
     lib.rdynamic = true;
     lib.stack_size = 4096;
-    lib.import_memory = true;
     lib.initial_memory = 65536;
     lib.max_memory = 65536;
 
