@@ -31,9 +31,6 @@ func main() {
 		"hosted": wypes.Module{
 			"pong": wypes.H0(pongFunc),
 		},
-		"env": wypes.Module{
-			"hola": wypes.H1(holaFunc),
-		},
 	}
 	if err := eng.Interpreter.SetModules(modules); err != nil {
 		println(err.Error())
@@ -45,11 +42,5 @@ func main() {
 
 func pongFunc() wypes.Void {
 	println("pong")
-	return wypes.Void{}
-}
-
-func holaFunc(msg wypes.String) wypes.Void {
-	println(msg.Unwrap())
-
 	return wypes.Void{}
 }

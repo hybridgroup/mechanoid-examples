@@ -36,7 +36,6 @@ var (
 		"run":   run,
 		"halt":  halt,
 		"ping":  ping,
-		"hello": hello,
 	}
 )
 
@@ -325,23 +324,5 @@ func ping(argv []string) {
 			println(err.Error())
 			return
 		}
-	}
-}
-
-func hello(argv []string) {
-	if eng.FileStore == nil {
-		println("no file store available")
-		return
-	}
-
-	if !running {
-		println("module not running. use 'run' first.")
-		return
-	}
-
-	_, err := instance.Call("hello")
-	if err != nil {
-		println(err.Error())
-		return
 	}
 }
