@@ -4,8 +4,7 @@
 
 This repo contains example applications written using Mechanoid (https://mechanoid.io)
 
-See the README files inside each for details on what they do, how they work and the **recommended runtime interpreter** (wazero, wasman,...), as there are some differences among them and the example might not run 
-properly. 
+See the README files inside each for details on what they do, how they work and the **recommended runtime interpreter** (wazero, wasman,...), as there are some differences among them and the example might not run correctly. 
 
 ## Blinky
 
@@ -33,6 +32,8 @@ Application built using Mechanoid that uses host external references.
 
 Application that demonstrates how to use the onboard Flash storage on the hardware device to save/load/run external WASM modules via a Command line interface directly on the device itself.
 
+Also shows how to use Mechanoid with WASM modules written using TinyGo, Rust, or Zig.
+
 ## Simple
 
 Example of a simple "ping" application built using Mechanoid.
@@ -42,6 +43,14 @@ Example of a simple "ping" application built using Mechanoid.
 ![Thumby](./images/thumby.jpg)
 
 This is an example of an application built using Mechanoid specifically for the Thumby "itty-bitty game system". 
+
+## ThumbyFile
+
+![Thumby](./images/thumby.jpg)
+
+Application that demonstrates how to use the onboard Flash storage on the Thumby device to save/load/run external WASM modules via a Command line interface directly on the device itself, along with display support so you can see what it happening on the tiny display.
+
+Also shows how to use Mechanoid with WASM modules written using TinyGo, Rust, or Zig.
 
 ## WASMBadge
 
