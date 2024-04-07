@@ -15,9 +15,9 @@ var (
 
 //go:export start
 func start() {
-	copy(buf[:], msg)
+	//copy(buf[:], msg)
 
-	badge_set_text1(convert.BytesToWasmPtr(buf[:len(msg)]))
+	badge_set_text1(convert.StringToWasmPtr(msg))
 }
 
 //go:export update
