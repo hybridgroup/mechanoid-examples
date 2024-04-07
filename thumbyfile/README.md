@@ -1,13 +1,13 @@
-# Filestore
+# Thumby Filestore
 
-Application that demonstrates how to use the onboard Flash storage on the hardware device to save/load/run external WASM modules via a Command line interface directly on the device itself.
+Application that demonstrates how to use the onboard Flash storage on the Thumby device to save/load/run external WASM modules via a Command line interface directly on the device itself, along with display support so you can see what it happening on the tiny display.
 
 ## How to run
 
 ### Flash the board
 
 ```bash
-$ mecha flash -m pybadge                                    
+$ mecha flash -i wasman -m thumby                                    
 Building TinyGo module ping                          
 Done.                                               
 code    data     bss |   flash     ram
@@ -25,8 +25,8 @@ Finished release [optimized] target(s) in 0.00s
 Building Zig module pingzig
 Done.                       
 Application built. Now flashing...
-code    data     bss |   flash     ram                     
-342556   16812    7224 |  359368   2403
+code      data     bss |   flash     ram                     
+147716       4    3640 |  147720    3644
 Connected to /dev/ttyACM0. Press Ctrl-C to exit.
 
 ==>
