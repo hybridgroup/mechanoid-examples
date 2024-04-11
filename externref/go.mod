@@ -3,7 +3,7 @@ module github.com/hybridgroup/mechanoid-examples/externref
 go 1.22.0
 
 require (
-	github.com/hybridgroup/mechanoid v0.0.0-20240309111213-758ddcc58e7a
+	github.com/hybridgroup/mechanoid v0.2.0
 	github.com/orsinium-labs/wypes v0.1.4
 )
 

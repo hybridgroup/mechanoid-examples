@@ -5,7 +5,7 @@ go 1.22.0
 require (
 	github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def
 	github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182
-	github.com/hybridgroup/mechanoid v0.0.0-20240309111213-758ddcc58e7a
+	github.com/hybridgroup/mechanoid v0.2.0
 	github.com/hybridgroup/tinygo-tello v0.0.0-20240310133819-eb8919c64e88
 	github.com/orsinium-labs/wypes v0.1.4
 	tinygo.org/x/drivers v0.27.0
