@@ -2,12 +2,18 @@ module github.com/hybridgroup/mechanoid-examples/display
 
 go 1.22.0
 
+replace github.com/aykevl/board => ../../../tinygo/board
+
+replace tinygo.org/x/drivers => ../../../tinygo/drivers
+
+replace github.com/aykevl/tinygl => ../../../tinygo/tinygl
+
 require (
 	github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def
 	github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182
 	github.com/hybridgroup/mechanoid v0.2.0
 	github.com/orsinium-labs/wypes v0.1.4
-	tinygo.org/x/drivers v0.26.1-0.20231124130000-fef6564044f9
+	tinygo.org/x/drivers v0.27.1-0.20240509133757-7dbca2a54349
 )
 
 require (
@@ -35,11 +41,12 @@ require (
 	github.com/tetratelabs/wazero v1.7.1-0.20240401054209-4d6585d7da56 // indirect
 	github.com/tevino/abool v1.2.0 // indirect
 	github.com/yuin/goldmark v1.4.13 // indirect
-	golang.org/x/image v0.3.0 // indirect
+	golang.org/x/image v0.15.0 // indirect
 	golang.org/x/mobile v0.0.0-20211207041440-4e6c2922fdee // indirect
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
-	golang.org/x/text v0.7.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	honnef.co/go/js/dom v0.0.0-20210725211120-f030747120f2 // indirect
+	tinygo.org/x/tinygl-font v0.0.0-20240406210647-1cb0a1c67ca1 // indirect
 )

@@ -4,7 +4,7 @@ import (
 	"github.com/aykevl/board"
 	"github.com/aykevl/tinygl"
 	"github.com/aykevl/tinygl/style"
-	"github.com/aykevl/tinygl/style/basic"
+	"github.com/aykevl/tinygl/style/mono"
 	"github.com/hybridgroup/mechanoid/convert"
 	"github.com/orsinium-labs/wypes"
 	"tinygo.org/x/drivers/pixel"
@@ -15,7 +15,7 @@ var pongCount int
 type Device[T pixel.Color] struct {
 	Display  board.Displayer[T]
 	Screen   *tinygl.Screen[T]
-	Theme    *basic.Basic[T]
+	Theme    *mono.Theme[T]
 	VBox     *tinygl.VBox[T]
 	Header   *tinygl.Text[T]
 	PingText *tinygl.Text[T]
@@ -44,7 +44,7 @@ func (d *Device[T]) Init() error {
 	// Initialize the screen.
 	buf := pixel.NewImage[T](int(width), int(height)/4)
 	d.Screen = tinygl.NewScreen[T](d.Display, buf, board.Display.PPI())
-	d.Theme = basic.NewTheme(style.NewScale(scalePercent), d.Screen)
+	d.Theme = mono.New(style.NewScale(scalePercent), d.Screen)
 	d.Header = d.Theme.NewText("Hello, Mechanoid")
 	d.PingText = d.Theme.NewText("waiting...")
 	d.PongText = d.Theme.NewText("waiting...")

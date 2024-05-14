@@ -58,6 +58,6 @@ func run[T pixel.Color](disp board.Displayer[T]) {
 
 		eng.Devices[0].(*display.Device[T]).ShowPing(pingCount)
 
-		time.Sleep(1 * time.Second)
+		time.Sleep(500 * time.Millisecond)
 	}
 }
