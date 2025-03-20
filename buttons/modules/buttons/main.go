@@ -85,5 +85,3 @@ func buttonRight() {
 
 	message(ptr, sz)
 }
-
-func main() {}

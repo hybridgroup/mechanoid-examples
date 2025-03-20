@@ -1,13 +1,15 @@
 module github.com/hybridgroup/mechanoid-examples/buttons
 
-go 1.22.0
+go 1.22.1
+
+toolchain go1.24.1
 
 require (
-	github.com/aykevl/board v0.0.0-20240106144210-80ca76f77def
+	github.com/aykevl/board v0.0.0-20240525115753-a919e5413467
 	github.com/aykevl/tinygl v0.0.0-20240131130748-3033a2fd9182
-	github.com/hybridgroup/mechanoid v0.0.0-20240309111213-758ddcc58e7a
-	github.com/orsinium-labs/wypes v0.1.4
-	tinygo.org/x/drivers v0.27.0
+	github.com/hybridgroup/mechanoid v0.2.1-0.20250320151011-fc8885880efa
+	github.com/orsinium-labs/wypes v0.3.2
+	tinygo.org/x/drivers v0.31.0
 )
 
 require (
@@ -32,14 +34,14 @@ require (
 	github.com/srwiley/oksvg v0.0.0-20220731023508-a61f04f16b76 // indirect
 	github.com/srwiley/rasterx v0.0.0-20210519020934-456a8d69b780 // indirect
 	github.com/stretchr/testify v1.8.0 // indirect
-	github.com/tetratelabs/wazero v1.7.1-0.20240401054209-4d6585d7da56 // indirect
+	github.com/tetratelabs/wazero v1.9.0 // indirect
 	github.com/tevino/abool v1.2.0 // indirect
 	github.com/yuin/goldmark v1.4.13 // indirect
 	golang.org/x/image v0.3.0 // indirect
 	golang.org/x/mobile v0.0.0-20211207041440-4e6c2922fdee // indirect
-	golang.org/x/net v0.7.0 // indirect
-	golang.org/x/sys v0.5.0 // indirect
-	golang.org/x/text v0.7.0 // indirect
+	golang.org/x/net v0.33.0 // indirect
+	golang.org/x/sys v0.28.0 // indirect
+	golang.org/x/text v0.21.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	honnef.co/go/js/dom v0.0.0-20210725211120-f030747120f2 // indirect
 )

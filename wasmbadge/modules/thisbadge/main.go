@@ -21,5 +21,3 @@ func update() {
 
 	badge_set_text4(convert.StringToWasmPtr(msg3))
 }
-
-func main() {}

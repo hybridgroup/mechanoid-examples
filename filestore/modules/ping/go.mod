@@ -1,5 +1,7 @@
 module github.com/hybridgroup/mechanoid-examples/filestore/modules/ping
 
-go 1.22.0
+go 1.22.1
+
+toolchain go1.24.1
 
 replace github.com/tetratelabs/wazero => github.com/orsinium-forks/wazero v0.0.0-20240305131633-28fdf656fe85

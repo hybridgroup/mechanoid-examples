@@ -14,7 +14,7 @@ var pongCount int
 type Device[T pixel.Color] struct {
 	Display      board.Displayer[T]
 	Screen       *tinygl.Screen[T]
-	Theme        *basic.Basic[T]
+	Theme        *basic.Theme[T]
 	VBox         *tinygl.VBox[T]
 	Header       *tinygl.Text[T]
 	Message1Text *tinygl.Text[T]
@@ -45,7 +45,7 @@ func (d *Device[T]) Init() error {
 	// Initialize the screen.
 	buf := pixel.NewImage[T](int(width), int(height)/4)
 	d.Screen = tinygl.NewScreen[T](d.Display, buf, board.Display.PPI())
-	d.Theme = basic.NewTheme(style.NewScale(scalePercent), d.Screen)
+	d.Theme = basic.New(style.NewScale(scalePercent), d.Screen)
 	d.Header = d.Theme.NewText("Mechanoid")
 	d.Message1Text = d.Theme.NewText("")
 	d.Message2Text = d.Theme.NewText("")

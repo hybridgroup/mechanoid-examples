@@ -9,7 +9,7 @@ Application that loads an embedded WASM program that blinks an LED on the hardwa
 ### Pybadge
 
 ```
-$ mecha flash -i wazero -m pybadge
+$ mecha flash -m pybadge
 Building module blink
 Done.
    code    data     bss |   flash     ram

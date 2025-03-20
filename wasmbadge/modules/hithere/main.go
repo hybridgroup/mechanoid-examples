@@ -35,5 +35,3 @@ func update() {
 
 	badge_set_text3(convert.BytesToWasmPtr(buf[0:end]))
 }
-
-func main() {}

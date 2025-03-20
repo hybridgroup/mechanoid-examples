@@ -29,5 +29,3 @@ func update() {
 	copy(buf[len(description)+1:], description2)
 	badge_set_text4(convert.BytesToWasmPtr(buf[len(description)+1 : len(description)+len(description2)+1]))
 }
-
-func main() {}

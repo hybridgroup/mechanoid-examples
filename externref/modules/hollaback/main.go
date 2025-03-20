@@ -48,5 +48,3 @@ func update() {
 	ptr, sz := convert.BytesToWasmPtr(buf[:len(msg2)])
 	greeter_hello(ref, ptr, sz)
 }
-
-func main() {}

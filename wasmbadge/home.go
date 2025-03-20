@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/aykevl/tinygl"
-	"github.com/aykevl/tinygl/style/basic"
 	"tinygo.org/x/drivers/pixel"
 
 	"github.com/hybridgroup/mechanoid-examples/wasmbadge/devices/display"
@@ -12,7 +11,7 @@ type HomePage[T pixel.Color] struct {
 	Name    string
 	VBox    *tinygl.VerticalScrollBox[T]
 	Header  *tinygl.Text[T]
-	ListBox *basic.ListBox[T]
+	ListBox *tinygl.ListBox[T]
 }
 
 var (
