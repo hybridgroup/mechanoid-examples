@@ -1,5 +1,7 @@
 module github.com/hybridgroup/mechanoid-examples/wasmbadge/modules/mynameis
 
-go 1.22.0
+go 1.22.1
 
-require github.com/hybridgroup/mechanoid v0.0.0-20240308111911-97652132727d
+toolchain go1.24.1
+
+require github.com/hybridgroup/mechanoid v0.2.1-0.20250320151011-fc8885880efa

@@ -22,5 +22,3 @@ func loop() {
 	led.Set(on)
 	on = led.Get()
 }
-
-func main() {}

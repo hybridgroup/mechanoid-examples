@@ -18,5 +18,3 @@ func start() {
 func update() {
 	badge_set_text4(convert.StringToWasmPtr(name))
 }
-
-func main() {}

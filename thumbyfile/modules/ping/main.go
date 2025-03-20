@@ -9,5 +9,3 @@ func pong()
 func ping() {
 	pong()
 }
-
-func main() {}

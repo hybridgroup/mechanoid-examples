@@ -1,5 +1,7 @@
 module github.com/hybridgroup/mechanoid-examples/wasmdrone/modules/drone
 
-go 1.22.0
+go 1.22.1
 
-require github.com/hybridgroup/mechanoid v0.0.0-20240310110742-7303f6e2a7b5
+toolchain go1.24.1
+
+require github.com/hybridgroup/mechanoid v0.2.1-0.20250320151011-fc8885880efa

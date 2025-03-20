@@ -22,5 +22,3 @@ func update() {
 	badge_set_text3(convert.StringToWasmPtr(message3))
 	badge_set_text4(convert.StringToWasmPtr(message4))
 }
-
-func main() {}

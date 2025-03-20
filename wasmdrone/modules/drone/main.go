@@ -118,5 +118,3 @@ func buttonRight(shift int32) {
 
 	droneControl(uint32(direction), defaultSpeed)
 }
-
-func main() {}
